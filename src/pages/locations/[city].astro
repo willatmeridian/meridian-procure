@@ -9,6 +9,8 @@ import FooterSection from '../../components/sections/FooterSection.astro';
 import { getAllCities, getCityData } from '../../lib/sanity/client.js';
 import { cityData } from '../../lib/sanity/cityData.js'; // Fallback data
 
+export const prerender = true;
+
 // Generate static paths from Sanity CMS
 export async function getStaticPaths() {
   try {

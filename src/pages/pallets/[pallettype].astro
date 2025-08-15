@@ -8,6 +8,7 @@ import LocationsSection from '../../components/sections/LocationsSection.astro';
 import FooterSection from '../../components/sections/FooterSection.astro';
 import { getAllPalletTypes, getPalletTypeData } from '../../lib/sanity/client.js';
 
+export const prerender = true;
 
 // Generate static paths for both CMS and static pallet types
 export async function getStaticPaths() {
