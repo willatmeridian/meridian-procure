@@ -155,6 +155,21 @@ export async function POST({ request }) {
         const formUrl = `https://forms.hubspot.com/uploads/form/v2/${portalId}/${formId}`;
         const formData2 = new FormData();
         
+        // Get client IP address from request headers
+        const clientIP = request.headers.get('x-forwarded-for') || 
+                        request.headers.get('x-real-ip') || 
+                        request.headers.get('cf-connecting-ip') || 
+                        '127.0.0.1';
+        
+        // Add tracking information for better analytics
+        formData2.append('hs_context', JSON.stringify({
+          hutk: formData.hutk || '',
+          ipAddress: clientIP.split(',')[0].trim(), // Use first IP if multiple
+          pageUri: formData.pageUri || '',
+          pageName: formData.pageName || '',
+          timestamp: Date.now()
+        }));
+        
         // Add basic fields that exist on the form
         if (formData.firstName) formData2.append('firstname', safeString(formData.firstName));
         if (formData.lastName) formData2.append('lastname', safeString(formData.lastName));
@@ -173,7 +188,7 @@ export async function POST({ request }) {
         if (formData.additionalDetails) formData2.append('rfq_details', safeString(formData.additionalDetails));
         if (formData.palletDimensions) formData2.append('pallet_dimensions', safeString(formData.palletDimensions));
 
-        console.log('Submitting to HubSpot Forms API for form submission tracking...');
+        console.log('Submitting to HubSpot Forms API for form submission tracking with IP:', clientIP);
         
         const formResponse = await fetch(formUrl, {
           method: 'POST',

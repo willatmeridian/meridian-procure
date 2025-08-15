@@ -37,13 +37,27 @@ const QuoteFormComponent = () => {
     setSubmitStatus(null);
 
     try {
+      // Get HubSpot tracking cookie for better analytics
+      const getCookieValue = (name) => {
+        const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        return match ? match[2] : '';
+      };
+
+      // Prepare form data with tracking information
+      const submissionData = {
+        ...formData,
+        hutk: getCookieValue('hubspotutk'),
+        pageUri: window.location.href,
+        pageName: document.title
+      };
+
       // Use server-side HubSpot CRM API for full custom field support
       const response = await fetch('/api/submit-hubspot', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(submissionData)
       });
 
       const result = await response.json();
