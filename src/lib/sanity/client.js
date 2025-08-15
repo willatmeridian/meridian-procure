@@ -5,6 +5,7 @@ import { createClient } from '@sanity/client'
 export const client = createClient({
   projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID || '9csl81p9', // Your actual Sanity project ID
   dataset: import.meta.env.PUBLIC_SANITY_DATASET || 'production',
+  token: import.meta.env.SANITY_READ_TOKEN, // Required for private datasets
   useCdn: import.meta.env.PROD, // Use CDN for production builds
   apiVersion: '2024-08-07', // Use current date or a stable API version
 })
