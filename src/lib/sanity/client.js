@@ -121,33 +121,10 @@ export async function getHeroContent(pageType, slug = null) {
 // Helper function to fetch city-specific pallet pricing
 export async function getCityPalletPricing(citySlug) {
   try {
-    // First, let's see all the raw location pricing data for debugging
-    const debugQuery = `*[_type == "palletType"]{
-      name,
-      "slug": slug.current,
-      category,
-      locationPricing[]{
-        "cityName": city->cityName,
-        "citySlug": city->slug.current,
-        price,
-        inStock,
-        minQuantity
-      }
-    }`
+    console.log('🔍 Fetching pallet pricing for city:', citySlug)
     
-    const debugData = await client.fetch(debugQuery)
-    console.log('=== ALL PALLET PRICING DATA ===')
-    debugData.forEach(pallet => {
-      console.log(`${pallet.name} (${pallet.category}):`)
-      pallet.locationPricing.forEach(loc => {
-        if (loc.citySlug === citySlug) {
-          console.log(`  ✓ ${loc.cityName} (${loc.citySlug}): $${loc.price}`)
-        }
-      })
-    })
-    
-    // Now the corrected query using the suggested syntax
-    const query = `*[_type == "palletType"]{
+    // Simplified approach: Get all pallet data and filter in JavaScript
+    const allPallets = await client.fetch(`*[_type == "palletType"]{
       name,
       "slug": slug.current,
       "imageUrl": mainImage.asset->url,
@@ -155,21 +132,50 @@ export async function getCityPalletPricing(citySlug) {
       category,
       shortDescription,
       description,
-      "cityPricing": locationPricing[city->slug.current == $citySlug][0]{
+      locationPricing[]{
+        "cityName": city->cityName,
+        "citySlug": city->slug.current,
         price,
         inStock,
-        minQuantity,
-        "cityName": city->cityName
+        minQuantity
       }
-    }[defined(cityPricing)]`
+    }`)
     
-    const data = await client.fetch(query, { citySlug })
-    console.log('=== FILTERED CMS DATA FOR', citySlug.toUpperCase(), '===')
-    data.forEach(pallet => {
-      console.log(`${pallet.name}: $${pallet.cityPricing.price}`)
+    console.log(`📦 Found ${allPallets.length} pallet types in Sanity`)
+    
+    // Filter and transform the data
+    const filteredPallets = allPallets
+      .map(pallet => {
+        // Find pricing for this specific city
+        const cityPricing = pallet.locationPricing?.find(loc => loc.citySlug === citySlug)
+        
+        if (cityPricing) {
+          return {
+            name: pallet.name,
+            slug: pallet.slug,
+            imageUrl: pallet.imageUrl,
+            basePrice: pallet.basePrice,
+            category: pallet.category,
+            shortDescription: pallet.shortDescription,
+            description: pallet.description,
+            cityPricing: {
+              price: cityPricing.price,
+              inStock: cityPricing.inStock,
+              minQuantity: cityPricing.minQuantity,
+              cityName: cityPricing.cityName
+            }
+          }
+        }
+        return null
+      })
+      .filter(Boolean) // Remove null entries
+    
+    console.log(`💰 Found ${filteredPallets.length} pallets with pricing for ${citySlug}`)
+    filteredPallets.forEach(pallet => {
+      console.log(`  - ${pallet.name}: $${pallet.cityPricing.price}`)
     })
     
-    return data
+    return filteredPallets
   } catch (error) {
     console.error('Error fetching city pallet pricing:', error)
     return []
