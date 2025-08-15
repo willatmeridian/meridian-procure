@@ -1,9 +1,17 @@
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || import.meta.env.STRIPE_SECRET_KEY);
+export const prerender = false;
 
 export async function POST({ request, url }) {
   try {
+    // Initialize Stripe inside the function to avoid build-time issues
+    const stripeSecretKey = process.env.STRIPE_SECRET_KEY || import.meta.env.STRIPE_SECRET_KEY;
+    
+    if (!stripeSecretKey) {
+      throw new Error('Stripe secret key is not configured');
+    }
+    
+    const stripe = new Stripe(stripeSecretKey);
     const { items, customerInfo } = await request.json();
 
     // Calculate line items for Stripe
