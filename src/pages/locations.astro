@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/Layout.astro';
+import NavigationBarSection from '../components/NavigationBarSection.jsx';
+import HeroSection from '../components/sections/HeroSection.astro';
+import LocationsSection from '../components/sections/LocationsSection.astro';
+import GetStartedSection from '../components/sections/GetStartedSection.astro';
+import QuoteFormSection from '../components/sections/QuoteFormSection.astro';
+import FooterSection from '../components/sections/FooterSection.astro';
+---
+
+<Layout title="Locations - Meridian | Pallet Distribution Centers Nationwide">
+  <div class="bg-white flex flex-row justify-center w-full">
+    <div class="bg-white overflow-hidden w-full max-w-[1440px] relative">
+      <!-- Navigation Bar Section -->
+      <NavigationBarSection client:load />
+
+      <!-- Hero Section -->
+      <section class="relative w-full py-16 sm:py-24 bg-[#F5F4F1] mt-[60px] sm:mt-[88px]">
+        <div class="relative w-full h-full">
+          <!-- Main Content Container -->
+          <div class="relative z-10 flex flex-col items-center justify-center py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
+            <!-- Main Heading -->
+            <h1 class="font-['Instrument_Sans',Helvetica] font-bold text-gray-900 text-center mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[90px] leading-tight sm:leading-tight md:leading-tight lg:leading-tight xl:leading-[90px]">
+              Nationwide Locations
+              <br />
+              Coast to Coast
+            </h1>
+
+            <!-- Subheading -->
+            <h2 class="font-['Instrument_Sans',Helvetica] font-semibold text-gray-600 text-center leading-relaxed max-w-4xl text-sm sm:text-base md:text-lg lg:text-xl xl:text-[23px] sm:leading-6 md:leading-7 lg:leading-8 xl:leading-[30px]">
+              2,000+ Trusted Partners Nationwide
+              <br />
+              Quality pallets delivered locally, wherever your business operates.
+            </h2>
+          </div>
+        </div>
+      </section>
+
+      <!-- Locations Section -->
+      <LocationsSection />
+
+      <!-- Quote Form Section -->
+      <QuoteFormSection 
+        title="Don't see your location?"
+        subtitle="We can provide competitive pricing and local delivery for any location in the lower 48. Fill out the form below to let us know what you need."
+      />
+
+      <!-- Get Started Section -->
+      <GetStartedSection />
+    </div>
+  </div>
+  
+  <!-- Footer Section - Full Width Background -->
+  <FooterSection />
+</Layout>

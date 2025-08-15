@@ -1,0 +1,81 @@
+---
+// This component will receive city data from Sanity CMS
+// For now, using placeholder data structure
+interface Props {
+  cityName?: string;
+  cityDescription?: string;
+  cityImage?: string;
+}
+
+const { 
+  cityName = "Los Angeles",
+  cityDescription = "Our Los Angeles facility serves the entire Southern California region with premium pallet solutions. We understand the unique logistics challenges of this market and provide custom solutions that keep your supply chain moving efficiently.",
+  cityImage = "/img/city-placeholder.jpg"
+} = Astro.props;
+---
+
+<section class="w-full py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex flex-col lg:flex-row items-center gap-12">
+      <!-- Text Content - Left Column -->
+      <div class="flex-1 lg:pr-8">
+        <h2 class="text-4xl font-bold text-gray-900 mb-6 [font-family:'Instrument_Sans',Helvetica]">
+          Pallet Solutions in {cityName}
+        </h2>
+        
+        <div class="prose prose-lg text-gray-700">
+          <p class="text-lg leading-relaxed [font-family:'Instrument_Sans',Helvetica]">
+            {cityDescription}
+          </p>
+          
+          <div class="mt-8 space-y-4">
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 bg-meridian-gold rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                <svg class="w-3 h-3 text-[#415a77]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <p class="text-gray-700 [font-family:'Instrument_Sans',Helvetica]">
+                Local manufacturing and distribution
+              </p>
+            </div>
+            
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 bg-meridian-gold rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                <svg class="w-3 h-3 text-[#415a77]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <p class="text-gray-700 [font-family:'Instrument_Sans',Helvetica]">
+                Same-day and next-day delivery options
+              </p>
+            </div>
+            
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 bg-meridian-gold rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                <svg class="w-3 h-3 text-[#415a77]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <p class="text-gray-700 [font-family:'Instrument_Sans',Helvetica]">
+                Competitive pricing with volume discounts
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Image - Right Column -->
+      <div class="flex-1">
+        <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+          <img 
+            src={cityImage}
+            alt={`${cityName} pallet solutions`}
+            class="w-full h-96 object-cover"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

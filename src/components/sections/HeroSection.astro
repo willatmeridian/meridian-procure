@@ -1,0 +1,73 @@
+---
+import { Button } from "../ui/button";
+---
+
+<section class="relative w-full h-[600px] sm:h-[700px] lg:h-[964px] mt-[60px] sm:mt-[88px]">
+  <div class="relative w-full h-full">
+    <!-- Background Image -->
+    <picture>
+      <source 
+        media="(max-width: 768px)" 
+        srcset="/img/hero/homepage-mobile.webp"
+        type="image/webp"
+      >
+      <source 
+        media="(min-width: 769px)" 
+        srcset="/img/hero/homepage-desktop.webp"
+        type="image/webp"
+      >
+      <img
+        class="absolute w-full h-full top-0 left-0 object-cover"
+        alt="Wooden pallets stacked together"
+        src="/img/1n5a9599-enhanced-nr-1.png"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </picture>
+
+    <!-- Dark Overlay -->
+    <div class="absolute w-full h-full top-0 left-0 bg-black opacity-50"></div>
+
+    <!-- Main Content Container -->
+    <div class="absolute inset-0 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
+      <!-- Main Heading -->
+      <h1 class="font-['Instrument_Sans',Helvetica] font-bold text-white text-center mb-6 sm:mb-8 lg:mb-12 text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[90px] leading-tight sm:leading-tight md:leading-tight lg:leading-tight xl:leading-[90px]">
+        Pallets made easy.
+        <br />
+        Built near you.
+      </h1>
+
+      <!-- Subheading -->
+      <h2 class="font-['Instrument_Sans',Helvetica] font-semibold text-white text-center mb-12 sm:mb-16 lg:mb-24 text-base sm:text-lg md:text-xl lg:text-[23px] leading-6 sm:leading-7 md:leading-8 lg:leading-[30px] max-w-2xl">
+        Industry Expertise & Custom Pallet Solutions
+        <br />
+        Serving all major locales | Schedule a call or buy pallets now.
+      </h2>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 lg:gap-10 w-full max-w-md sm:max-w-none">
+        <Button 
+          client:load
+          className="bg-[#e1c16e] hover:bg-[#d1b15e] text-white font-['Instrument_Sans',Helvetica] font-normal px-4 sm:px-6 py-3 sm:py-[15px] h-auto rounded-xl text-base sm:text-lg lg:text-xl w-full sm:w-auto"
+        >
+          Schedule a Call
+        </Button>
+
+        <Button 
+          client:load
+          className="bg-[#1e308e] hover:bg-[#0f1a4d] text-white font-['Instrument_Sans',Helvetica] font-normal px-4 sm:px-6 py-3 sm:py-[15px] h-auto rounded-xl text-base sm:text-lg lg:text-xl w-full sm:w-auto"
+        >
+          Buy Now
+        </Button>
+      </div>
+    </div>
+
+    <!-- Down Arrow -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+      <svg class="w-[22px] h-[54px] text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
+    </div>
+  </div>
+</section>

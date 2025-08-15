@@ -1,0 +1,74 @@
+---
+import Layout from '../layouts/Layout.astro';
+import NavigationBarSection from '../components/NavigationBarSection.jsx';
+import CartSection from '../components/sections/CartSection.astro';
+import QuoteFormSection from '../components/sections/QuoteFormSection.astro';
+import FooterSection from '../components/sections/FooterSection.astro';
+---
+
+<Layout title="Buy Pallets Now - Meridian | Online Pallet Ordering">
+  <div class="bg-white flex flex-row justify-center w-full">
+    <div class="bg-white overflow-hidden w-full max-w-[1440px] relative">
+      <!-- Navigation Bar Section -->
+      <NavigationBarSection client:load />
+
+      <!-- Hero Section with buy-now specific content -->
+      <section class="relative w-full py-16 sm:py-24 bg-gray-800 mt-[60px] sm:mt-[88px]">
+        <div class="relative w-full h-full">
+
+          <!-- Main Content Container -->
+          <div class="relative z-10 flex flex-col items-center justify-center py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
+            <!-- Main Heading -->
+            <h1 class="font-['Instrument_Sans',Helvetica] font-bold text-white text-center mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[90px] leading-tight sm:leading-tight md:leading-tight lg:leading-tight xl:leading-[90px]">
+              Buy Pallets Online
+            </h1>
+
+            <!-- Subheading -->
+            <h2 class="font-['Instrument_Sans',Helvetica] font-semibold text-white text-center leading-relaxed max-w-4xl text-sm sm:text-base md:text-lg lg:text-xl xl:text-[23px] sm:leading-6 md:leading-7 lg:leading-8 xl:leading-[30px] mb-6 sm:mb-8">
+              Select your location, choose your pallets, and checkout securely
+              <br />
+              Fast delivery • Competitive pricing • Secure payment with Stripe
+            </h2>
+
+            <!-- Features -->
+            <div class="mt-8 flex flex-col sm:flex-row gap-8 text-white">
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-meridian-gold" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-sm [font-family:'Instrument_Sans',Helvetica]">Same-day delivery</span>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-meridian-gold" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-sm [font-family:'Instrument_Sans',Helvetica]">Secure checkout</span>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-meridian-gold" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-sm [font-family:'Instrument_Sans',Helvetica]">Volume discounts</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Cart Section -->
+      <CartSection />
+
+      <!-- Quote Form Section -->
+      <QuoteFormSection 
+        title="Don't see your location or pallet type?"
+        subtitle="Share your delivery location and desired pallet type through the form below. We can provide competitive pricing with local delivery for all of your needs."
+      />
+    </div>
+  </div>
+  
+  <!-- Footer Section - Full Width Background -->
+  <FooterSection />
+</Layout>

@@ -1,0 +1,74 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Test Form - Meridian">
+  <div class="min-h-screen bg-gray-100 py-16">
+    <div class="max-w-2xl mx-auto px-4">
+      <div class="bg-white rounded-2xl shadow-lg p-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-8 text-center [font-family:'Instrument_Sans',Helvetica]">
+          Test Contact Form
+        </h1>
+        
+        <form name="test-contact" method="POST" netlify="true" class="space-y-6">
+          <input type="hidden" name="form-name" value="test-contact" />
+          
+          <div class="space-y-2">
+            <label for="name" class="block text-gray-700 font-medium [font-family:'Instrument_Sans',Helvetica]">
+              Your Name *
+            </label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 [font-family:'Instrument_Sans',Helvetica]"
+              placeholder="Enter your full name"
+            />
+          </div>
+          
+          <div class="space-y-2">
+            <label for="email" class="block text-gray-700 font-medium [font-family:'Instrument_Sans',Helvetica]">
+              Email Address *
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 [font-family:'Instrument_Sans',Helvetica]"
+              placeholder="your@email.com"
+            />
+          </div>
+          
+          <div class="space-y-2">
+            <label for="message" class="block text-gray-700 font-medium [font-family:'Instrument_Sans',Helvetica]">
+              Message *
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              required
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 [font-family:'Instrument_Sans',Helvetica]"
+              placeholder="Tell us about your pallet needs..."
+            ></textarea>
+          </div>
+          
+          <div class="text-center">
+            <button 
+              type="submit"
+              class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-200 [font-family:'Instrument_Sans',Helvetica]"
+            >
+              Send Test Message
+            </button>
+          </div>
+          
+          <div class="text-sm text-gray-500 text-center">
+            This is a test form to verify Netlify form handling is working.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,120 @@
+---
+const palletImages = [
+  {
+    src: "/img/48x40-grade-a-stringer-wooden-pallet.png",
+    alt: "Grade A Wooden Pallet"
+  },
+  {
+    src: "/img/48x40-grade-b-stringer-wooden-pallet.png", 
+    alt: "Grade B Wooden Pallet"
+  },
+  {
+    src: "/img/custom-sizing-wooden-stringer-or-block-pallet.png",
+    alt: "Custom Wooden Pallet"
+  },
+  {
+    src: "/img/48x40-grade-a-stringer-wooden-pallet.png",
+    alt: "Premium Wooden Pallet"
+  },
+  {
+    src: "/img/48x40-grade-b-stringer-wooden-pallet.png",
+    alt: "Standard Wooden Pallet" 
+  }
+];
+---
+
+<section class="w-full py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <!-- Auto-scrolling image gallery -->
+    <div class="mb-12 overflow-hidden">
+      <div class="flex animate-scroll gap-8">
+        {[...palletImages, ...palletImages].map((image, index) => (
+          <div key={index} class="flex-shrink-0 w-64 h-40 rounded-2xl overflow-hidden shadow-lg">
+            <img 
+              src={image.src}
+              alt={image.alt}
+              class="w-full h-full object-cover"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+    
+    <!-- Description text -->
+    <div class="text-center max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6 [font-family:'Instrument_Sans',Helvetica]">
+        Premium Pallet Solutions
+      </h2>
+      
+      <p class="text-lg text-gray-700 leading-relaxed [font-family:'Instrument_Sans',Helvetica]">
+        Access the best priced custom and recycled pallets available through the Meridian network. 
+        Our extensive inventory includes Grade A premium pallets, cost-effective Grade B options, 
+        and fully customizable solutions to meet your exact specifications. With local manufacturing 
+        and distribution centers nationwide, we deliver quality pallets when and where you need them.
+      </p>
+      
+      <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-[#1b263b] rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-gray-900 mb-2 [font-family:'Instrument_Sans',Helvetica]">
+            Quality Guaranteed
+          </h3>
+          <p class="text-gray-600 text-sm [font-family:'Instrument_Sans',Helvetica]">
+            All pallets inspected to industry standards
+          </p>
+        </div>
+        
+        <div class="text-center">
+          <div class="w-16 h-16 bg-[#1b263b] rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-gray-900 mb-2 [font-family:'Instrument_Sans',Helvetica]">
+            Best Pricing
+          </h3>
+          <p class="text-gray-600 text-sm [font-family:'Instrument_Sans',Helvetica]">
+            Competitive rates with volume discounts
+          </p>
+        </div>
+        
+        <div class="text-center">
+          <div class="w-16 h-16 bg-[#1b263b] rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-gray-900 mb-2 [font-family:'Instrument_Sans',Helvetica]">
+            Fast Delivery
+          </h3>
+          <p class="text-gray-600 text-sm [font-family:'Instrument_Sans',Helvetica]">
+            Same-day and next-day options available
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .animate-scroll {
+    animation: scroll 30s linear infinite;
+  }
+  
+  .animate-scroll:hover {
+    animation-play-state: paused;
+  }
+</style>

@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+import NavigationBarSection from '../components/NavigationBarSection.jsx';
+import HeroSection from '../components/sections/HeroSection.astro';
+import TrustedLogosSection from '../components/sections/TrustedLogosSection.astro';
+import SolutionsSection from '../components/sections/SolutionsSection.astro';
+import WhyChooseSection from '../components/sections/WhyChooseSection.astro';
+import LocationsSection from '../components/sections/LocationsSection.astro';
+import GetStartedSection from '../components/sections/GetStartedSection.astro';
+import QuoteFormSection from '../components/sections/QuoteFormSection.astro';
+import FooterSection from '../components/sections/FooterSection.astro';
+---
+
+<Layout title="Meridian - Pallets made easy. Built near you.">
+  <div class="bg-white flex flex-row justify-center w-full">
+    <div class="bg-white overflow-hidden w-full max-w-[1440px] relative">
+      <!-- Navigation Bar Section -->
+      <NavigationBarSection client:load />
+
+      <!-- Hero Section -->
+      <HeroSection />
+
+      <!-- Trusted Logos Section -->
+      <TrustedLogosSection />
+
+      <!-- Solutions Section -->
+      <SolutionsSection />
+
+      <!-- Why Choose Section -->
+      <WhyChooseSection />
+
+      <!-- Locations Section -->
+      <LocationsSection />
+
+      <!-- Get Started Section -->
+      <GetStartedSection />
+
+      <!-- Quote Form Section -->
+      <QuoteFormSection 
+        title="Ready to Get Started?"
+        subtitle="Get a custom quote for your pallet needs. Tell us what you're looking for and we'll provide competitive pricing and delivery options."
+      />
+    </div>
+  </div>
+  
+  <!-- Footer Section - Full Width Background -->
+  <FooterSection />
+</Layout>

@@ -1,0 +1,99 @@
+---
+import { Button } from "../ui/button";
+
+const palletTypes = [
+  {
+    name: "Grade A Pallets",
+    image: "/img/48x40-grade-a-stringer-wooden-pallet.png",
+    price: "$10",
+    specs: [
+      "Dimensions: 48x40",
+      "Material: Wood",
+      "Condition: Recycled, high quality",
+      "Entry: 4-Way"
+    ]
+  },
+  {
+    name: "Grade B Pallets", 
+    image: "/img/48x40-grade-b-stringer-wooden-pallet.png",
+    price: "$8",
+    specs: [
+      "Dimensions: 48x40",
+      "Material: Wood", 
+      "Condition: Recycled, signs of wear",
+      "Entry: 4-Way"
+    ]
+  },
+  {
+    name: "Custom Pallets",
+    image: "/img/custom-sizing-wooden-stringer-or-block-pallet.png",
+    price: "Low Pricing",
+    specs: [
+      "Heat Treatment",
+      "Custom Dimensions",
+      "Custom Requirements", 
+      "Block Pallets"
+    ]
+  }
+];
+---
+
+<section class="w-full py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center text-gray-900 mb-12 [font-family:'Instrument_Sans',Helvetica]">
+      Available Pallet Types
+    </h2>
+    
+    <div class="overflow-x-auto pb-4">
+      <div class="flex gap-6 min-w-max">
+        {palletTypes.map((pallet) => (
+          <div class="flex-shrink-0 w-80 bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden">
+            <div class="p-6">
+              <div class="w-full h-48 rounded-xl overflow-hidden mb-6">
+                <img 
+                  src={pallet.image} 
+                  alt={pallet.name}
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              
+              <h3 class="text-xl font-semibold text-gray-900 text-center mb-2 [font-family:'Instrument_Sans',Helvetica]">
+                {pallet.name}
+              </h3>
+              
+              <div class="text-center mb-6">
+                <span class="text-2xl font-bold text-meridian-blue [font-family:'Instrument_Sans',Helvetica]">
+                  {pallet.price}
+                </span>
+                {pallet.price.includes("$") && (
+                  <span class="text-gray-600 ml-1">/pallet</span>
+                )}
+              </div>
+              
+              <Button 
+                client:load
+                className="w-full bg-meridian-blue hover:bg-blue-800 text-white font-normal py-3 px-6 rounded-xl mb-6 [font-family:'Instrument_Sans',Helvetica]"
+              >
+                Buy Now
+              </Button>
+              
+              <div class="space-y-2">
+                <h4 class="font-semibold text-gray-900 text-sm uppercase tracking-wider [font-family:'Instrument_Sans',Helvetica]">
+                  {pallet.name === "Custom Pallets" ? "CUSTOMIZATIONS:" : "SPECS:"}
+                </h4>
+                {pallet.specs.map((spec, index) => (
+                  <div key={index} class="flex items-start gap-2">
+                    <div class="w-2 h-2 bg-meridian-gold rounded-full mt-2 flex-shrink-0"></div>
+                    <p class="text-sm text-gray-700 [font-family:'Instrument_Sans',Helvetica]">
+                      {spec}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

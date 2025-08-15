@@ -1,0 +1,138 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import NavigationBarSection from '../../components/NavigationBarSection.jsx';
+import HeroSection from '../../components/sections/HeroSection.astro';
+import CitySection from '../../components/sections/CitySection.astro';
+import GetStartedSection from '../../components/sections/GetStartedSection.astro';
+import QuoteFormSection from '../../components/sections/QuoteFormSection.astro';
+import FooterSection from '../../components/sections/FooterSection.astro';
+import { getAllCities, getCityData } from '../../lib/sanity/client.js';
+import { cityData } from '../../lib/sanity/cityData.js'; // Fallback data
+
+// Generate static paths from Sanity CMS
+export async function getStaticPaths() {
+  try {
+    // Try to get cities from Sanity first
+    const sanityCities = await getAllCities();
+    
+    if (sanityCities && sanityCities.length > 0) {
+      return sanityCities.map(city => ({
+        params: { city: city.slug },
+        props: { isFromSanity: true }
+      }));
+    }
+  } catch (error) {
+    console.log('Sanity not available, using fallback data:', error.message);
+  }
+  
+  // Fallback to static city data
+  return cityData.map(city => ({
+    params: { city: city.slug },
+    props: {
+      cityName: city.cityName,
+      cityDescription: city.cityDescription,
+      cityImage: `/img/chatgpt-image-jul-17-2025-02-44-50-pm-1.png`,
+      heroTitle: city.heroTitle,
+      heroSubtitle: city.heroSubtitle,
+      state: city.state,
+      isFromSanity: false
+    }
+  }));
+}
+
+const { city } = Astro.params;
+let cityName, cityDescription, cityImage, heroTitle, heroSubtitle;
+
+// Fetch data from Sanity if available, otherwise use props
+if (Astro.props.isFromSanity) {
+  try {
+    const sanityData = await getCityData(city);
+    if (sanityData) {
+      cityName = sanityData.cityName;
+      cityDescription = sanityData.cityDescription;
+      cityImage = sanityData.cityImageUrl || `/img/chatgpt-image-jul-17-2025-02-44-50-pm-1.png`;
+      heroTitle = sanityData.heroTitle;
+      heroSubtitle = sanityData.heroSubtitle;
+    }
+  } catch (error) {
+    console.error('Error fetching city data from Sanity:', error);
+    // Fallback to static data
+    const fallbackCity = cityData.find(c => c.slug === city);
+    if (fallbackCity) {
+      cityName = fallbackCity.cityName;
+      cityDescription = fallbackCity.cityDescription;
+      cityImage = `/img/chatgpt-image-jul-17-2025-02-44-50-pm-1.png`;
+      heroTitle = fallbackCity.heroTitle;
+      heroSubtitle = fallbackCity.heroSubtitle;
+    }
+  }
+} else {
+  // Use props from static data
+  ({ cityName, cityDescription, cityImage, heroTitle, heroSubtitle } = Astro.props);
+}
+---
+
+<Layout title={`${cityName} Pallets - Meridian | Local Pallet Solutions`}>
+  <div class="bg-white flex flex-row justify-center w-full">
+    <div class="bg-white overflow-hidden w-full max-w-[1440px] relative">
+      <!-- Navigation Bar Section -->
+      <NavigationBarSection client:load />
+
+      <!-- Hero Section with city-specific content -->
+      <section class="relative w-full py-16 sm:py-24 bg-gray-800 mt-[60px] sm:mt-[88px]">
+        <div class="relative w-full h-full">
+          <!-- Main Content Container -->
+          <div class="relative z-10 flex flex-col items-center justify-center py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
+            <!-- Main Heading -->
+            <h1 class="font-['Instrument_Sans',Helvetica] font-bold text-white text-center mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[90px] leading-tight sm:leading-tight md:leading-tight lg:leading-tight xl:leading-[90px]">
+              {heroTitle}
+            </h1>
+
+            <!-- Subheading -->
+            <h2 class="font-['Instrument_Sans',Helvetica] font-semibold text-white text-center leading-relaxed max-w-4xl text-sm sm:text-base md:text-lg lg:text-xl xl:text-[23px] sm:leading-6 md:leading-7 lg:leading-8 xl:leading-[30px] mb-6 sm:mb-8">
+              {heroSubtitle}
+              <br />
+              Local manufacturing & distribution | Same-day delivery available
+            </h2>
+
+            <!-- CTA Buttons -->
+            <div class="flex items-center justify-center gap-10">
+              <a 
+                href="/contact"
+                class="bg-[#e1c16e] hover:bg-[#d1b15e] text-white text-xl font-['Instrument_Sans',Helvetica] font-normal px-6 py-[15px] h-auto rounded-xl transition-colors duration-200 inline-block"
+              >
+                Schedule a Call
+              </a>
+
+              <a 
+                href="/buy-now"
+                class="bg-[#131f5b] hover:bg-[#0f1a4d] text-white text-xl font-['Instrument_Sans',Helvetica] font-normal px-6 py-[15px] h-auto rounded-xl transition-colors duration-200 inline-block"
+              >
+                Buy Now
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- City Section with location-specific content -->
+      <CitySection 
+        cityName={cityName}
+        cityDescription={cityDescription}
+        cityImage={cityImage}
+      />
+
+      <!-- Get Started Section -->
+      <GetStartedSection />
+
+      <!-- Quote Form Section -->
+      <QuoteFormSection 
+        title={`Get a Quote for ${cityName}`}
+        subtitle={`Request pricing for pallet delivery to ${cityName}. We'll provide local rates and fast delivery options for your area.`}
+      />
+    </div>
+  </div>
+  
+  <!-- Footer Section - Full Width Background -->
+  <FooterSection />
+</Layout>

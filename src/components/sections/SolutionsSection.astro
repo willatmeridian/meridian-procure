@@ -1,0 +1,79 @@
+---
+import { Card, CardContent } from "../ui/card";
+import { Separator } from "../ui/separator";
+
+const solutionCards = [
+  {
+    title: "NATIONWIDE PROCUREMENT SOLUTIONS",
+    description: "Expert guidance & collective buying power.",
+    multiline: true,
+    href: "/national",
+  },
+  {
+    title: "BUY PALLETS NOW",
+    description: "Order pallets online and receive them within days.",
+    multiline: false,
+    href: "/buy-now",
+  },
+];
+---
+
+<section class="flex flex-col items-center py-12 sm:py-16 w-full max-w-[1087px] mx-auto px-4 sm:px-6 lg:px-8">
+  <h2 class="font-semibold text-gray-900 text-lg sm:text-xl text-center mb-8 sm:mb-12 [font-family:'Instrument_Sans',Helvetica]">
+    Solutions for all of your needs
+  </h2>
+
+  <div class="flex flex-col md:flex-row gap-4 sm:gap-5 w-full">
+    {solutionCards.map((card, index) => (
+      <a 
+        href={card.href}
+        class="flex-1 block"
+      >
+        <Card
+          client:load
+          className="h-full bg-white rounded-[15px] overflow-hidden border border-solid border-gray-200 shadow-lg text-gray-900 transition-all duration-300 ease-in-out hover:transform hover:-translate-y-2 hover:shadow-2xl cursor-pointer"
+        >
+        <CardContent className="flex flex-col items-center justify-between min-h-[481px] p-0 relative">
+          <div class="flex flex-col items-center justify-center flex-grow">
+            {index === 0 && (
+              <img 
+                src="/img/national-solutions-icon.png" 
+                alt="National Solutions Icon" 
+                class="w-[280px] h-[280px] mb-6 mt-[120px]"
+              />
+            )}
+            {index === 1 && (
+              <img 
+                src="/img/buy-pallets-now-icon.png" 
+                alt="Buy Pallets Now Icon" 
+                class="w-[280px] h-[280px] mb-6 mt-[120px]"
+              />
+            )}
+            <h3 class={`font-semibold text-2xl text-center tracking-[0] leading-[25.6px] px-12 [font-family:'Instrument_Sans',Helvetica] text-gray-900 ${(index === 0 || index === 1) ? 'mt-0' : 'mt-[213px]'}`}>
+              {card.multiline ? (
+                <Fragment>
+                  {card.title.split(" ").slice(0, 2).join(" ")} <br />
+                  {card.title.split(" ").slice(2).join(" ")}
+                </Fragment>
+              ) : (
+                card.title
+              )}
+            </h3>
+
+            <p class="font-medium text-lg text-center tracking-[0] leading-[25.6px] mt-16 px-12 [font-family:'Instrument_Sans',Helvetica] text-gray-900">
+              {card.description}
+            </p>
+          </div>
+
+          <div class="w-full px-[58px] mt-auto mb-[60px]">
+            <Separator client:load className="bg-gray-300 h-px w-full mb-5" />
+            <button class="font-medium text-base text-center tracking-[0] leading-[25.6px] [font-family:'Instrument_Sans',Helvetica] text-gray-900">
+              LEARN MORE
+            </button>
+          </div>
+        </CardContent>
+        </Card>
+      </a>
+    ))}
+  </div>
+</section>

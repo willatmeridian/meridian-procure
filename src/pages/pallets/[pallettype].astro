@@ -1,0 +1,195 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import NavigationBarSection from '../../components/NavigationBarSection.jsx';
+import HeroSection from '../../components/sections/HeroSection.astro';
+import PalletTypeSection from '../../components/sections/PalletTypeSection.astro';
+import QuoteFormSection from '../../components/sections/QuoteFormSection.astro';
+import LocationsSection from '../../components/sections/LocationsSection.astro';
+import FooterSection from '../../components/sections/FooterSection.astro';
+import { getAllPalletTypes, getPalletTypeData } from '../../lib/sanity/client.js';
+
+
+// Generate static paths for both CMS and static pallet types
+export async function getStaticPaths() {
+  // Define static types here to ensure they're available
+  const staticTypes = [
+    {
+      params: { pallettype: 'recycled' },
+      props: {
+        palletName: 'Recycled Pallets',
+        palletDescription: 'Our recycled pallet program supports environmental sustainability while providing cost-effective solutions. These pallets are sourced from various industries, inspected, repaired as needed, and returned to service. By choosing recycled pallets, you reduce waste and support the circular economy.',
+        palletImage: '/img/48x40-grade-b-stringer-wooden-pallet.png',
+        palletPrice: null,
+        palletSpecs: [
+          'Dimensions: Various sizes available',
+          'Material: Reclaimed wood construction', 
+          'Condition: Inspected and repaired',
+          'Entry: 2-Way or 4-Way options',
+          'Weight capacity: Varies by condition',
+          'Environmental: Supports sustainability goals',
+          'Cost savings: Up to 50% less than new pallets'
+        ],
+        heroTitle: 'Sustainable Recycled Pallets',
+        heroSubtitle: 'Environmentally responsible pallet solutions',
+        isStatic: true
+      }
+    },
+    {
+      params: { pallettype: 'new-custom' },
+      props: {
+        palletName: 'New & Custom Pallets',
+        palletDescription: 'Need pallets built to your exact specifications? Our custom pallet manufacturing service creates pallets tailored to your unique requirements. From non-standard dimensions to specialized materials, we work with you to design and build pallets that perfectly fit your application.',
+        palletImage: '/img/custom-sizing-wooden-stringer-or-block-pallet.png',
+        palletPrice: null,
+        palletSpecs: [
+          'Dimensions: Custom sizing available',
+          'Material: Hardwood, softwood, or mixed',
+          'Construction: Stringer or block design',
+          'Entry: 2-Way or 4-Way access options',
+          'Heat treatment: ISPM-15 compliance available',
+          'Special requirements: Moisture resistance, chemical treatment',
+          'Lead time: 2-3 weeks for custom orders'
+        ],
+        heroTitle: 'New & Custom Pallet Solutions',
+        heroSubtitle: 'Designed and built to your exact specifications',
+        isStatic: true
+      }
+    },
+    {
+      params: { pallettype: 'heat-treated' },
+      props: {
+        palletName: 'Heat Treated Pallets',
+        palletDescription: 'ISPM-15 certified heat treated pallets are essential for international shipping compliance. Our heat treatment process eliminates pests and pathogens while maintaining the structural integrity of the wood. These pallets meet international standards and come with proper certification.',
+        palletImage: '/img/48x40-grade-a-stringer-wooden-pallet.png',
+        palletPrice: null,
+        palletSpecs: [
+          'Dimensions: 48x40 inches (Standard GMA)',
+          'Material: Kiln-dried hardwood',
+          'Treatment: ISPM-15 certified heat treatment',
+          'Entry: 4-Way forklift and pallet jack access',
+          'Weight capacity: 2,500 lbs static load',
+          'Certification: Official ISPM-15 stamp included',
+          'Compliance: International shipping approved'
+        ],
+        heroTitle: 'Heat Treated Export Pallets',
+        heroSubtitle: 'ISPM-15 certified for international shipping compliance',
+        isStatic: true
+      }
+    }
+  ];
+
+  try {
+    // Try to get pallet types from Sanity CMS (Grade A, B, AAA)
+    const cmsTypes = await getAllPalletTypes();
+    
+    const cmsPaths = cmsTypes?.map(pallet => ({
+      params: { pallettype: pallet.slug },
+      props: { isFromSanity: true }
+    })) || [];
+    
+    // Combine CMS types with static informational types
+    return [...cmsPaths, ...staticTypes];
+    
+  } catch (error) {
+    console.log('Sanity not available for pallet types, using static data only:', error.message);
+    return staticTypes;
+  }
+}
+
+const { pallettype } = Astro.params;
+let palletName, palletDescription, palletImage, palletPrice, palletSpecs, heroTitle, heroSubtitle;
+
+// Check if this is a CMS-driven pallet type or static
+if (Astro.props.isFromSanity) {
+  // Fetch from Sanity CMS
+  try {
+    const sanityData = await getPalletTypeData(pallettype);
+    if (sanityData) {
+      palletName = sanityData.name;
+      palletDescription = sanityData.description;
+      palletImage = sanityData.imageUrl || '/img/default-pallet.png';
+      palletPrice = sanityData.basePrice;
+      palletSpecs = sanityData.specifications || [];
+      heroTitle = `${sanityData.name}`;
+      heroSubtitle = sanityData.shortDescription || 'Premium pallet solutions';
+    }
+  } catch (error) {
+    console.error('Error fetching pallet data from Sanity:', error);
+  }
+} else {
+  // Use static props
+  ({ palletName, palletDescription, palletImage, palletPrice, palletSpecs, heroTitle, heroSubtitle } = Astro.props);
+}
+---
+
+<Layout title={`${palletName} - Meridian | ${heroTitle}`}>
+  <div class="bg-white flex flex-row justify-center w-full">
+    <div class="bg-white overflow-hidden w-full max-w-[1440px] relative">
+      <!-- Navigation Bar Section -->
+      <NavigationBarSection client:load />
+
+      <!-- Hero Section with pallet-specific content -->
+      <section class="relative w-full mt-[88px]">
+        <div class="relative w-full">
+          <!-- Background Image -->
+          <picture>
+            <source 
+              media="(max-width: 768px)" 
+              srcset="/img/hero/lumber-mobile.webp"
+              type="image/webp"
+            >
+            <source 
+              media="(min-width: 769px)" 
+              srcset="/img/hero/lumber-desktop.webp"
+              type="image/webp"
+            >
+            <img
+              class="absolute w-full h-full top-0 left-0 object-cover"
+              alt="Horizontal lumber background"
+              src="/img/horizontal-lumber.png"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
+
+          <!-- Dark Overlay -->
+          <div class="absolute w-full h-full top-0 left-0 bg-black opacity-50"></div>
+
+          <!-- Main Content Container -->
+          <div class="relative z-10 flex flex-col items-center justify-center py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
+            <!-- Main Heading -->
+            <h1 class="font-['Instrument_Sans',Helvetica] font-bold text-white text-center mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[90px] leading-tight sm:leading-tight md:leading-tight lg:leading-tight xl:leading-[90px]">
+              {heroTitle}
+            </h1>
+
+            <!-- Subheading -->
+            <h2 class="font-['Instrument_Sans',Helvetica] font-semibold text-white text-center leading-relaxed max-w-4xl text-sm sm:text-base md:text-lg lg:text-xl xl:text-[23px] sm:leading-6 md:leading-7 lg:leading-8 xl:leading-[30px]">
+              {heroSubtitle}
+            </h2>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pallet Type Section with detailed information -->
+      <PalletTypeSection 
+        palletName={palletName}
+        palletDescription={palletDescription}
+        palletImage={palletImage}
+        palletSpecs={palletSpecs}
+      />
+
+      <!-- Quote Form Section -->
+      <QuoteFormSection 
+        title={`Get a Quote for ${palletName}`}
+        subtitle={`Request pricing and availability for ${palletName.toLowerCase()}. We'll provide competitive rates and delivery options for your specific needs.`}
+      />
+
+      <!-- Locations Section -->
+      <LocationsSection />
+    </div>
+  </div>
+  
+  <!-- Footer Section - Full Width Background -->
+  <FooterSection />
+</Layout>

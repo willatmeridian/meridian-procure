@@ -1,0 +1,263 @@
+---
+import { Button } from "../ui/button";
+
+// Form fields data
+const formFields = [
+  { id: "firstName", label: "First Name", required: true, type: "text" },
+  { id: "lastName", label: "Last Name", required: false, type: "text" },
+  { id: "email", label: "Email", required: true, type: "email" },
+  { id: "phone", label: "Phone Number", required: true, type: "phone" },
+  { id: "company", label: "Company name", required: false, type: "text" },
+];
+
+// Pallet product data - ordered as requested: Grade A, Grade B, AAA Pallets, Bulk Ordering, Custom Pallets
+const palletProducts = [
+  {
+    title: "Grade A Pallets",
+    description: "Great quality, built to last with minor repairs.",
+    price: "$10",
+    minQuantity: "Minimum of 100",
+    image: "url(/img/48x40-grade-a-stringer-wooden-pallet.png)",
+    buyLink: "/buy-now",
+    specs: [
+      { icon: "/img/component-3-5.svg", text: "Dimensions: 48x40" },
+      { icon: "/img/component-3-3.svg", text: "Material: Wood" },
+      {
+        icon: "/img/component-3-5.svg",
+        text: "Condition: Recycled, high\nquality",
+      },
+      { icon: "/img/component-3-3.svg", text: "Entry: 4-Way" },
+      {
+        icon: "/img/component-3-5.svg",
+        text: "AKA: Grade 1, #1, Grade A Standard GMA",
+        hasBold: true,
+        boldText: "AKA: ",
+      },
+    ],
+  },
+  {
+    title: "Grade B Pallets",
+    description: "Affordable, multiple repairs but sturdy.",
+    price: "$8",
+    minQuantity: "Minimum of 100",
+    image: "url(/img/48x40-grade-b-stringer-wooden-pallet.png)",
+    buyLink: "/buy-now",
+    specs: [
+      { icon: "/img/component-3-6.svg", text: "Dimension: 48x40" },
+      { icon: "/img/component-3-11.svg", text: "Material: Wood" },
+      {
+        icon: "/img/component-3-10.svg",
+        text: "Condition: Recycled, signs\nof wear/repairs",
+      },
+      { icon: "/img/component-3-11.svg", text: "Entry: 4-Way" },
+      {
+        icon: "/img/component-3-11.svg",
+        text: "AKA: Grade 2, #2, Grade B Standard GMA",
+        hasBold: true,
+        boldText: "AKA: ",
+      },
+    ],
+  },
+  {
+    title: "AAA Pallets",
+    description: "Highest grade, like-new condition.",
+    price: "$12",
+    minQuantity: "Minimum of 50",
+    image: "url(/img/aaa-pallets.png)", // You'll upload this image
+    buyLink: "/buy-now",
+    specs: [
+      { icon: "/img/component-3-5.svg", text: "Dimensions: 48x40" },
+      { icon: "/img/component-3-3.svg", text: "Material: Wood" },
+      {
+        icon: "/img/component-3-5.svg",
+        text: "Condition: Recycled,\nno stringer replacements",
+      },
+      { icon: "/img/component-3-3.svg", text: "Entry: 4-Way" },
+      {
+        icon: "/img/component-3-5.svg",
+        text: "AKA: Premium Grade, AAA Standard GMA",
+        hasBold: true,
+        boldText: "AKA: ",
+      },
+    ],
+  },
+  {
+    title: "Bulk Ordering",
+    description: "Volume orders, better pricing.",
+    price: "Volume Pricing",
+    minQuantity: "500+ pallets",
+    image: "url(/img/bulk-ordering.png)", // You'll upload this image
+    buyLink: "#quote-form",
+    buttonText: "Get Quote",
+    specs: [
+      { icon: "/img/component-3-16.svg", text: "Discounts with Recurring Orders" },
+      { icon: "/img/component-3-13.svg", text: "Collective Buying Power" },
+      { icon: "/img/component-3-16.svg", text: "Flexible Delivery" },
+      { icon: "/img/component-3-15.svg", text: "Cost Optimization" },
+    ],
+  },
+  {
+    title: "Custom Pallets",
+    description: "Need a unique pallet? We've got you.",
+    price: "Low Pricing",
+    minQuantity: "Quantities vary",
+    image: "url(/img/custom-sizing-wooden-stringer-or-block-pallet.png)",
+    buyLink: "#quote-form",
+    buttonText: "Get Quote",
+    customizations: [
+      { icon: "/img/component-3-16.svg", text: "Heat Treatment" },
+      { icon: "/img/component-3-13.svg", text: "Custom Dimensions" },
+      { icon: "/img/component-3-16.svg", text: "Custom Requirements" },
+      { icon: "/img/component-3-15.svg", text: "Block Pallets" },
+      { icon: "/img/component-3-16.svg", text: "And more..." },
+    ],
+  },
+];
+---
+
+<section class="w-full max-w-7xl mx-auto px-4 py-16">
+  <div class="flex flex-col items-center mb-12">
+    <h2 class="text-3xl font-bold text-center text-gray-900 font-meridianprocure-com-semantic-heading-2">
+      Buy Pallets Now
+    </h2>
+    <p class="mt-4 text-center text-gray-600 max-w-2xl font-inter text-[16.9px] leading-7">
+      Purchase standard pallet sizes readily available near you or submit a form for custom / recurring order pricing.
+    </p>
+  </div>
+
+  <!-- Product Cards - All 5 cards in a row -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+    {palletProducts.map((product, index) => (
+        <div
+          key={index}
+          class="flex-1 border border-[#080c241a] shadow-[0px_8px_14px_#00000026,0px_2px_4px_#0000001a,inset_0px_0px_0px_2px_#080c2433] overflow-hidden"
+        >
+          <div class="p-[15px] flex flex-col">
+            <div
+              class="w-full h-[172.67px] rounded-2xl bg-cover bg-center"
+              style={{ backgroundImage: product.image }}
+            />
+
+            <div class="py-5">
+              <h3 class="text-center font-bold text-xl text-[#080c24] font-['Instrument_Sans',Helvetica]">
+                {product.title}
+              </h3>
+              <p class="text-center font-normal text-base text-[#080c24] font-['Instrument_Sans',Helvetica]">
+                {product.description}
+              </p>
+            </div>
+
+            <div class="my-4 bg-[#080b2326] h-px" />
+
+            <div class="pb-8 flex justify-center">
+              {product.buyLink.startsWith('#') ? (
+                <button
+                  data-smooth-scroll={product.buyLink}
+                  class="flex max-w-[226px] w-full items-center justify-center pt-[15.25px] pb-4 px-6 bg-[#1e308e] rounded-xl text-white font-buy-meridianprocure-com-instrument-sans-regular cursor-pointer hover:bg-[#0f1a4d] transition-colors duration-200"
+                  type="button"
+                >
+                  {product.buttonText || "Buy now"}
+                </button>
+              ) : (
+                <a
+                  href={product.buyLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex max-w-[226px] w-full items-center justify-center pt-[15.25px] pb-4 px-6 bg-[#1e308e] rounded-xl text-white font-buy-meridianprocure-com-instrument-sans-regular hover:bg-[#0f1a4d] transition-colors duration-200"
+                >
+                  {product.buttonText || "Buy now"}
+                </a>
+              )}
+            </div>
+
+            <div class="flex flex-col">
+              <div class="pb-5">
+                <span class="font-buy-meridianprocure-com-semantic-item-upper text-[#080b2399] whitespace-nowrap">
+                  {index === 4 ? "CUSTOMIZATIONS:" : index === 3 ? "DETAILS:" : "SPECS:"}
+                </span>
+              </div>
+
+              {(index === 4 ? product.customizations : product.specs).map(
+                (item, i) => (
+                  <div
+                    key={i}
+                    class="flex min-h-[36.8px] gap-2 items-start mb-2"
+                  >
+                    <div class="w-6 h-6 p-1 bg-[#121f5b1a] rounded-xl flex items-center justify-center">
+                      <img
+                        class="h-4 w-auto object-cover"
+                        alt="Icon"
+                        src={item.icon}
+                      />
+                    </div>
+                    <div class="flex-1 pb-[11.2px]">
+                      <p class="font-normal text-base text-[#080c24] leading-[25.6px] font-['Instrument_Sans',Helvetica]">
+                        {item.hasBold ? (
+                          <Fragment>
+                            <span class="font-bold">{item.boldText}</span>
+                            {item.text.replace(item.boldText, "")}
+                          </Fragment>
+                        ) : (
+                          item.text
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                ),
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+  </div>
+</section>
+
+<script>
+  // Smooth scroll functionality for quote form buttons
+  function initSmoothScroll() {
+    // Find all buttons with data-smooth-scroll attribute
+    const smoothScrollButtons = document.querySelectorAll('[data-smooth-scroll]');
+    
+    smoothScrollButtons.forEach(button => {
+      button.addEventListener('click', handleSmoothScroll);
+    });
+    
+    // Also handle regular anchor links to #quote-form
+    const quoteFormLinks = document.querySelectorAll('a[href="#quote-form"]');
+    quoteFormLinks.forEach(link => {
+      link.addEventListener('click', handleSmoothScroll);
+    });
+  }
+
+  function handleSmoothScroll(e) {
+    e.preventDefault();
+    
+    // Get target from data attribute or href
+    const target = e.currentTarget.getAttribute('data-smooth-scroll') || 
+                   e.currentTarget.getAttribute('href');
+    
+    if (!target || !target.startsWith('#')) return;
+    
+    const targetId = target.replace('#', '');
+    const targetElement = document.getElementById(targetId);
+    
+    if (!targetElement) return;
+    
+    // Calculate position with navbar offset (88px navbar + 32px extra padding)
+    const navbarOffset = 120;
+    const targetPosition = targetElement.offsetTop - navbarOffset;
+    
+    // Smooth scroll to target
+    window.scrollTo({
+      top: Math.max(0, targetPosition),
+      behavior: 'smooth'
+    });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSmoothScroll);
+  } else {
+    initSmoothScroll();
+  }
+</script>

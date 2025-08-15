@@ -1,0 +1,102 @@
+---
+// Data for the feature cards
+const featureCards = [
+  {
+    icon: "/img/component-1.svg",
+    title: "Collective Buying Power",
+    description:
+      "Access competitive pricing through our extensive network, leveraging group purchasing for the best rates",
+  },
+  {
+    icon: "/img/component-1-1.svg",
+    title: "Expert Guidance",
+    description:
+      "Our specialists guide you through supplier selection and quality assurance with personalized recommendations",
+  },
+  {
+    icon: "/img/component-1-2.svg",
+    title: "Market Insights",
+    description:
+      "Quarterly reviews help you save costs and gain competitive edge by staying ahead of market trends",
+  },
+  {
+    icon: "/img/component-1-3.svg",
+    title: "Cost Optimization",
+    description:
+      "Our team identifies ways to reduce spend and enhance value, ensuring cost-effective procurement",
+  },
+  {
+    icon: "/img/component-1-4.svg",
+    title: "Simplified Sourcing",
+    description:
+      "Streamlined process guarantees competitive pricing, quality control, and proactive management",
+  },
+  {
+    icon: "/img/component-1-5.svg",
+    title: "Industry Expertise",
+    description:
+      "Leverage our deep knowledge of the pallet and packaging landscape for optimal decisions",
+  },
+];
+---
+
+<section class="flex flex-col w-full items-start gap-8 sm:gap-12 py-12 sm:py-16 bg-[#F5F4F1]">
+  <div class="max-w-[1248px] mx-auto w-full flex flex-col items-start gap-8 sm:gap-12 px-4 sm:px-6 lg:px-8">
+  <div class="flex flex-col items-center gap-4 w-full">
+    <div class="flex flex-col items-center w-full">
+      <h2 class="font-bold text-gray-900 text-center leading-tight font-['Instrument_Sans',Helvetica] text-2xl sm:text-[28.5px] sm:leading-9">
+        Why Choose Meridian?
+      </h2>
+    </div>
+
+    <div class="flex flex-col max-w-2xl items-center mx-auto px-4">
+      <p class="font-normal text-gray-600 text-center leading-relaxed font-['Instrument_Sans',Helvetica] text-sm sm:text-base lg:text-[16.9px] sm:leading-6 lg:leading-7">
+        We simplify procurement with industry expertise, purchasing power,
+        and cutting-edge insights. Our streamlined process ensures you get the best
+        value and service.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 w-full">
+    {featureCards.map((card, index) => (
+      <div
+        key={`feature-card-${index}`}
+        class="bg-white rounded-lg border border-solid border-stone-200 shadow-[0px_1px_2px_#0000000d]"
+      >
+        <div class="p-4 sm:p-6">
+          <div class="w-12 h-12 bg-[#415a771a] rounded-full flex items-center justify-center mb-6">
+            <img
+              class="w-6 h-6"
+              alt={`${card.title} icon`}
+              src={card.icon}
+            />
+          </div>
+
+          <h3
+            class={`font-semibold text-stone-950 leading-tight sm:leading-7 mb-2 text-base sm:text-[18.9px] ${
+              index === 5
+                ? "font-meridianprocure-com-inter-semi-bold"
+                : index === 3 || index === 4
+                  ? "font-['Inter',Helvetica]"
+                  : "font-['Instrument_Sans',Helvetica]"
+            }`}
+          >
+            {card.title}
+          </h3>
+
+          <p
+            class={`text-gray-600 leading-relaxed sm:leading-6 text-sm sm:text-[15.2px] ${
+              index === 2 || index === 5
+                ? "font-meridianprocure-com-inter-regular"
+                : "font-['Inter',Helvetica] font-normal"
+            }`}
+          >
+            {card.description}
+          </p>
+        </div>
+      </div>
+    ))}
+  </div>
+  </div>
+</section>

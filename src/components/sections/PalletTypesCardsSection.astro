@@ -1,0 +1,93 @@
+---
+import { Button } from "../ui/button";
+
+const palletTypes = [
+  {
+    name: "AAA GMA 48x40",
+    image: "/img/48x40-grade-a-stringer-wooden-pallet.png",
+    description: "Top-tier premium pallets meeting GMA standards with superior quality and durability.",
+    link: "/pallets/aaa-gma"
+  },
+  {
+    name: "Grade A 48x40",
+    image: "/img/48x40-grade-a-stringer-wooden-pallet.png",
+    description: "Premium quality, built to last with minimal wear and maximum durability.",
+    link: "/pallets/grade-a"
+  },
+  {
+    name: "Grade B 48x40",
+    image: "/img/48x40-grade-b-stringer-wooden-pallet.png", 
+    description: "Affordable, sturdy pallets with signs of wear but reliable performance.",
+    link: "/pallets/grade-b"
+  },
+  {
+    name: "New / Custom Pallets",
+    image: "/img/custom-sizing-wooden-stringer-or-block-pallet.png",
+    description: "Brand new pallets or custom solutions built to your specific requirements.",
+    link: "/pallets/new-custom"
+  },
+  {
+    name: "Recycled Pallets",
+    image: "/img/48x40-grade-b-stringer-wooden-pallet.png",
+    description: "Environmentally conscious pallet solutions that maintain quality and performance.",
+    link: "/pallets/recycled"
+  },
+  {
+    name: "Heat-Treated Pallets",
+    image: "/img/48x40-grade-a-stringer-wooden-pallet.png",
+    description: "ISPM-15 certified heat treated pallets for international shipping compliance.",
+    link: "/pallets/heat-treated"
+  }
+];
+---
+
+<section class="w-full py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-4 [font-family:'Instrument_Sans',Helvetica]">
+        Explore Our Pallet Types
+      </h2>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto [font-family:'Instrument_Sans',Helvetica]">
+        From premium Grade A pallets to custom solutions, find the perfect pallet for your business needs
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {palletTypes.map((pallet) => (
+        <a 
+          href={pallet.link}
+          class="bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 cursor-pointer block"
+        >
+          <div class="relative h-48 overflow-hidden">
+            <img 
+              src={pallet.image}
+              alt={pallet.name}
+              class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+          </div>
+          
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-3 [font-family:'Instrument_Sans',Helvetica]">
+              {pallet.name}
+            </h3>
+            
+            <p class="text-gray-600 mb-6 leading-relaxed [font-family:'Instrument_Sans',Helvetica]">
+              {pallet.description}
+            </p>
+          </div>
+          
+          <div class="px-6 pb-6">
+            <div class="w-full h-px bg-gray-200 mb-4"></div>
+            <div class="flex justify-between items-center text-sm text-gray-500">
+              <span class="[font-family:'Instrument_Sans',Helvetica]">Learn More</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

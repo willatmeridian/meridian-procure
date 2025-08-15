@@ -1,0 +1,47 @@
+---
+// Individual logo data
+const logos = [
+  { src: "/img/pot-logo-5.png", alt: "POT Company logo" },
+  { src: "/img/koch-companies-logo.png", alt: "Koch Companies logo" },
+  { src: "/img/tnt-fireworks-logo.png", alt: "TNT Fireworks logo" },
+];
+
+// Duplicate logos multiple times for seamless scrolling
+const logoItems = [...logos, ...logos, ...logos, ...logos];
+---
+
+<section class="w-full max-w-[1305px] mx-auto py-16">
+  <div class="flex flex-col items-center w-full">
+    <h2 class="w-full font-['Instrument_Sans',Helvetica] font-semibold text-xl text-center tracking-[0] leading-[25.6px] mb-[38px] text-gray-900">
+      Trusted by teams nation-wide
+    </h2>
+
+    <div class="overflow-hidden w-full">
+      <div class="flex items-center gap-[45px] w-max animate-scroll">
+        {logoItems.map((logo, index) => (
+          <img
+            key={`logo-${index}`}
+            class="w-[205px] h-[155px] object-contain flex-shrink-0"
+            alt={logo.alt}
+            src={logo.src}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .animate-scroll {
+    animation: scroll 40s linear infinite;
+  }
+</style>

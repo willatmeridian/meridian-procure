@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+import NavigationBarSection from '../components/NavigationBarSection.jsx';
+import HeroSection from '../components/sections/HeroSection.astro';
+import PalletOverviewSection from '../components/sections/PalletOverviewSection.astro';
+import PalletTypesCardsSection from '../components/sections/PalletTypesCardsSection.astro';
+import QuoteFormSection from '../components/sections/QuoteFormSection.astro';
+import FooterSection from '../components/sections/FooterSection.astro';
+---
+
+<Layout title="Pallets - Meridian | Premium Wooden Pallet Manufacturing">
+  <div class="bg-white flex flex-row justify-center w-full">
+    <div class="bg-white overflow-hidden w-full max-w-[1440px] relative">
+      <!-- Navigation Bar Section -->
+      <NavigationBarSection client:load />
+
+      <!-- Hero Section with pallet-specific content -->
+      <section class="relative w-full h-[600px] sm:h-[700px] lg:h-[964px] mt-[60px] sm:mt-[88px]">
+        <div class="relative w-full h-full">
+          <!-- Background Image -->
+          <picture>
+            <source 
+              media="(max-width: 768px)" 
+              srcset="/img/hero/pallets-mobile.webp"
+              type="image/webp"
+            >
+            <source 
+              media="(min-width: 769px)" 
+              srcset="/img/hero/pallets-desktop.webp"
+              type="image/webp"
+            >
+            <img
+              class="absolute w-full h-full top-0 left-0 object-cover"
+              alt="Pallet barn background"
+              src="/img/pallet-barn.png"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
+
+          <!-- Dark Overlay -->
+          <div class="absolute w-full h-full top-0 left-0 bg-black opacity-50"></div>
+
+          <!-- Main Content Container -->
+          <div class="absolute inset-0 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
+            <!-- Main Heading -->
+            <h1 class="font-['Instrument_Sans',Helvetica] font-bold text-white text-center mb-6 sm:mb-8 lg:mb-12 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[90px] leading-tight sm:leading-tight md:leading-tight lg:leading-tight xl:leading-[90px]">
+              Premium Pallets
+              <br />
+              Every Size & Grade
+            </h1>
+
+            <!-- Subheading -->
+            <h2 class="font-['Instrument_Sans',Helvetica] font-semibold text-white text-center leading-relaxed max-w-4xl text-sm sm:text-base md:text-lg lg:text-xl xl:text-[23px] sm:leading-6 md:leading-7 lg:leading-8 xl:leading-[30px]">
+              From Grade A premium to custom solutions
+              <br />
+              Find the perfect pallet for your business needs
+            </h2>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pallet Overview Section -->
+      <PalletOverviewSection />
+
+      <!-- Pallet Types Cards Section -->
+      <PalletTypesCardsSection />
+
+      <!-- Quote Form Section -->
+      <QuoteFormSection 
+        title="Need a Custom Pallet Quote?"
+        subtitle="Tell us your specific pallet requirements and we'll provide a tailored quote with competitive pricing and delivery options."
+      />
+    </div>
+  </div>
+  
+  <!-- Footer Section - Full Width Background -->
+  <FooterSection />
+</Layout>

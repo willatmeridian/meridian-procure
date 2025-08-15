@@ -1,0 +1,129 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import NavigationBarSection from '../../components/NavigationBarSection.jsx';
+import FooterSection from '../../components/sections/FooterSection.astro';
+---
+
+<Layout title="Order Confirmed - Meridian | Thank You for Your Purchase">
+  <div class="bg-white flex flex-row justify-center w-full">
+    <div class="bg-white overflow-hidden w-full max-w-[1440px] relative">
+      <!-- Navigation Bar Section -->
+      <NavigationBarSection client:load />
+
+      <!-- Success Section -->
+      <section class="w-full py-24 mt-[88px]">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+          <!-- Success Icon -->
+          <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-8">
+            <svg class="w-10 h-10 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+
+          <!-- Main Heading -->
+          <h1 class="text-4xl font-bold text-gray-900 mb-4 [font-family:'Instrument_Sans',Helvetica]">
+            Order Confirmed!
+          </h1>
+
+          <!-- Subheading -->
+          <p class="text-xl text-gray-600 mb-8 [font-family:'Instrument_Sans',Helvetica]">
+            Thank you for your pallet order. We've received your payment and will contact you within 24 hours to confirm delivery details.
+          </p>
+
+          <!-- Next Steps -->
+          <div class="bg-blue-50 border border-blue-200 rounded-2xl p-8 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4 [font-family:'Instrument_Sans',Helvetica]">
+              What Happens Next?
+            </h2>
+            <div class="space-y-4 text-left max-w-2xl mx-auto">
+              <div class="flex items-start gap-3">
+                <div class="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <span class="text-xs font-bold">1</span>
+                </div>
+                <p class="text-gray-700 [font-family:'Instrument_Sans',Helvetica]">
+                  <strong>Order Processing:</strong> We'll review your order and prepare it for delivery within 24 hours.
+                </p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <span class="text-xs font-bold">2</span>
+                </div>
+                <p class="text-gray-700 [font-family:'Instrument_Sans',Helvetica]">
+                  <strong>Delivery Confirmation:</strong> Our team will contact you to schedule delivery and confirm your location.
+                </p>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <span class="text-xs font-bold">3</span>
+                </div>
+                <p class="text-gray-700 [font-family:'Instrument_Sans',Helvetica]">
+                  <strong>Fast Delivery:</strong> Your pallets will be delivered according to the scheduled time.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Information -->
+          <div class="bg-gray-50 rounded-2xl p-8 mb-8">
+            <h3 class="text-xl font-semibold text-gray-900 mb-4 [font-family:'Instrument_Sans',Helvetica]">
+              Questions About Your Order?
+            </h3>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6 text-gray-600">
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                </svg>
+                <span class="[font-family:'Instrument_Sans',Helvetica]">1-800-PALLETS</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                <span class="[font-family:'Instrument_Sans',Helvetica]">info@meridianprocure.com</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a 
+              href="/buy-now"
+              class="bg-meridian-blue hover:bg-blue-800 text-white px-8 py-3 rounded-xl font-semibold transition-colors [font-family:'Instrument_Sans',Helvetica]"
+            >
+              Order More Pallets
+            </a>
+            <a 
+              href="/"
+              class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-8 py-3 rounded-xl font-semibold transition-colors [font-family:'Instrument_Sans',Helvetica]"
+            >
+              Return to Homepage
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  
+  <!-- Footer Section - Full Width Background -->
+  <FooterSection />
+</Layout>
+
+<script>
+  // Get session ID from URL params for order tracking
+  const urlParams = new URLSearchParams(window.location.search);
+  const sessionId = urlParams.get('session_id');
+  
+  if (sessionId) {
+    // You can store this for order tracking or send to analytics
+    console.log('Stripe session ID:', sessionId);
+    
+    // Optional: Send conversion tracking to analytics
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'purchase', {
+        transaction_id: sessionId,
+        value: 0, // You'd need to get this from session
+        currency: 'USD'
+      });
+    }
+  }
+</script>

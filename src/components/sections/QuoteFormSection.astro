@@ -1,0 +1,30 @@
+---
+import QuoteFormComponent from "../QuoteFormComponent.jsx";
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+}
+
+const { 
+  title = "Tell us your Pallet Needs",
+  subtitle = "Submit a form to let us know how we can service your recurring or custom pallet needs."
+} = Astro.props;
+---
+
+<section id="quote-form" class="w-full py-12 sm:py-16 bg-[#F5F4F1]">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-6 sm:mb-8">
+      <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 [font-family:'Instrument_Sans',Helvetica]">
+        {title}
+      </h2>
+      <p class="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto [font-family:'Instrument_Sans',Helvetica]">
+        {subtitle}
+      </p>
+    </div>
+    
+    <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 lg:p-8">
+      <QuoteFormComponent client:load />
+    </div>
+  </div>
+</section>

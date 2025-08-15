@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+import NavigationBarSection from '../components/NavigationBarSection.jsx';
+import OurStorySection from '../components/sections/OurStorySection.astro';
+import WhyChooseSection from '../components/sections/WhyChooseSection.astro';
+import GetInTouchSection from '../components/sections/GetInTouchSection.astro';
+import FooterSection from '../components/sections/FooterSection.astro';
+---
+
+<Layout title="About Us - Meridian | Supply Chain Solutions & Pallet Excellence">
+  <div class="bg-white flex flex-row justify-center w-full">
+    <div class="bg-white overflow-hidden w-full max-w-[1440px] relative">
+      <!-- Navigation Bar Section -->
+      <NavigationBarSection client:load />
+
+      <!-- Hero Section with about-specific content -->
+      <section class="relative w-full py-16 sm:py-24 bg-gray-800 mt-[60px] sm:mt-[88px]">
+        <div class="relative w-full h-full">
+          <!-- Main Content Container -->
+          <div class="relative z-10 flex flex-col items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
+            <!-- Main Heading -->
+            <h1 class="font-['Instrument_Sans',Helvetica] font-bold text-white text-center mb-6 sm:mb-8 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[70px] leading-tight sm:leading-tight md:leading-tight lg:leading-tight xl:leading-[70px]">
+              About Meridian
+            </h1>
+
+            <!-- Subheading -->
+            <h2 class="font-['Instrument_Sans',Helvetica] font-semibold text-white text-center leading-relaxed max-w-4xl text-sm sm:text-base md:text-lg lg:text-[20px] sm:leading-6 md:leading-7 lg:leading-[28px]">
+              Founded by four friends with a passion for solving supply chain challenges
+              <br />
+              Delivering best-in-class pricing through market intelligence and industry expertise
+            </h2>
+          </div>
+        </div>
+      </section>
+
+      <!-- Our Story Section -->
+      <OurStorySection />
+
+      <!-- Why Choose Section -->
+      <WhyChooseSection />
+
+      <!-- Get In Touch Section -->
+      <GetInTouchSection />
+    </div>
+  </div>
+  
+  <!-- Footer Section - Full Width Background -->
+  <FooterSection />
+</Layout>
