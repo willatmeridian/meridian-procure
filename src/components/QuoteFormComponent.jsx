@@ -37,19 +37,16 @@ const QuoteFormComponent = () => {
     setSubmitStatus(null);
 
     try {
-      // Use HubSpot Forms API (basic fields only for now)
-      const { submitToHubSpot, transformFormData } = await import('../lib/hubspot.js');
-      const transformedData = transformFormData(formData);
-      const quoteFormId = import.meta.env.PUBLIC_HUBSPOT_QUOTE_FORM_ID;
-      
-      console.log('Quote Form Debug:', {
-        originalData: formData,
-        transformedData,
-        quoteFormId,
-        expectedFormId: '60d74e04-e6b4-4d9f-910c-a20c0abba0f9'
+      // Use server-side HubSpot CRM API for full custom field support
+      const response = await fetch('/api/submit-hubspot', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
       });
-      
-      const result = await submitToHubSpot(transformedData, quoteFormId);
+
+      const result = await response.json();
       
       if (result.success) {
         setSubmitStatus({
