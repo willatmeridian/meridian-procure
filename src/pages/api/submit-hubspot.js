@@ -10,28 +10,50 @@ export async function POST({ request }) {
       throw new Error('HubSpot private API key is not configured');
     }
 
+    // Helper function to safely convert values
+    const safeString = (value) => value ? String(value).trim() : '';
+    const safeBooleanOption = (value) => value ? 'true' : 'false';
+    
     // Create contact using CRM API
     const contactPayload = {
       properties: {
-        // Basic fields
-        firstname: formData.firstName || '',
-        lastname: formData.lastName || '',
-        email: formData.email || '',
-        phone: formData.phone || '',
-        company: formData.company || '',
-        
-        // Custom quote fields (if they exist)
-        ...(formData.deliveryPostalCode && { zip: formData.deliveryPostalCode }),
-        ...(formData.quantity && { pallet_quantity: formData.quantity.toString() }),
-        ...(formData.palletType && { pallet_build: formData.palletType }),
-        ...(formData.entryType && { entry_type: formData.entryType }),
-        ...(formData.lumberType && { lumber_type: formData.lumberType }),
-        ...(formData.palletGrade && { pallet_grade: formData.palletGrade }),
-        ...(formData.heatTreated !== undefined && { heat_treatment: formData.heatTreated ? 'Yes' : 'No' }),
-        ...(formData.additionalDetails && { rfq_details: formData.additionalDetails }),
-        ...(formData.palletDimensions && { pallet_dimensions: formData.palletDimensions }),
+        // Basic fields (always include these)
+        firstname: safeString(formData.firstName),
+        lastname: safeString(formData.lastName),
+        email: safeString(formData.email),
+        phone: safeString(formData.phone),
+        company: safeString(formData.company),
       }
     };
+
+    // Add custom quote fields only if they have values
+    if (formData.deliveryPostalCode) {
+      contactPayload.properties.zip = safeString(formData.deliveryPostalCode);
+    }
+    if (formData.quantity) {
+      contactPayload.properties.pallet_quantity = safeString(formData.quantity);
+    }
+    if (formData.palletType) {
+      contactPayload.properties.pallet_build = safeString(formData.palletType);
+    }
+    if (formData.entryType) {
+      contactPayload.properties.entry_type = safeString(formData.entryType);
+    }
+    if (formData.lumberType) {
+      contactPayload.properties.lumber_type = safeString(formData.lumberType);
+    }
+    if (formData.palletGrade) {
+      contactPayload.properties.pallet_grade = safeString(formData.palletGrade);
+    }
+    if (formData.heatTreated !== undefined && formData.heatTreated !== null) {
+      contactPayload.properties.heat_treatment = safeBooleanOption(formData.heatTreated);
+    }
+    if (formData.additionalDetails) {
+      contactPayload.properties.rfq_details = safeString(formData.additionalDetails);
+    }
+    if (formData.palletDimensions) {
+      contactPayload.properties.pallet_dimensions = safeString(formData.palletDimensions);
+    }
 
     // Also create a formatted message as backup
     if (formData.quantity || formData.palletType) {
