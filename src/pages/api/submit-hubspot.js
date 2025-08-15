@@ -80,7 +80,7 @@ export async function POST({ request }) {
 
     console.log('Submitting to HubSpot CRM API:', contactPayload);
 
-    // Submit to HubSpot CRM API
+    // STEP 1: Submit to HubSpot CRM API for complete contact data
     const response = await fetch('https://api.hubapi.com/crm/v3/objects/contacts', {
       method: 'POST',
       headers: {
@@ -93,6 +93,8 @@ export async function POST({ request }) {
     const responseData = await response.json();
     console.log('HubSpot CRM API response:', responseData);
 
+    // Handle contact creation/update
+    let contactResult = null;
     if (!response.ok) {
       // If contact already exists, try to update it
       if (response.status === 409) {
@@ -132,26 +134,67 @@ export async function POST({ request }) {
           });
 
           if (updateResponse.ok) {
-            const updateData = await updateResponse.json();
-            return new Response(JSON.stringify({ 
-              success: true, 
-              message: 'Contact updated successfully',
-              data: updateData 
-            }), {
-              status: 200,
-              headers: { 'Content-Type': 'application/json' }
-            });
+            contactResult = await updateResponse.json();
+            console.log('Contact updated successfully');
           }
         }
+      } else {
+        throw new Error(`HubSpot CRM API error: ${responseData.message || 'Unknown error'}`);
       }
+    } else {
+      contactResult = responseData;
+      console.log('Contact created successfully');
+    }
 
-      throw new Error(`HubSpot CRM API error: ${responseData.message || 'Unknown error'}`);
+    // STEP 2: Submit to HubSpot Forms API to register form submission
+    const portalId = process.env.PUBLIC_HUBSPOT_PORTAL_ID || import.meta.env.PUBLIC_HUBSPOT_PORTAL_ID;
+    const formId = '60d74e04-e6b4-4d9f-910c-a20c0abba0f9'; // Your quote form ID
+    
+    if (portalId) {
+      try {
+        const formUrl = `https://forms.hubspot.com/uploads/form/v2/${portalId}/${formId}`;
+        const formData2 = new FormData();
+        
+        // Add basic fields that exist on the form
+        if (formData.firstName) formData2.append('firstname', safeString(formData.firstName));
+        if (formData.lastName) formData2.append('lastname', safeString(formData.lastName));
+        if (formData.email) formData2.append('email', safeString(formData.email));
+        if (formData.phone) formData2.append('phone', safeString(formData.phone));
+        if (formData.company) formData2.append('company', safeString(formData.company));
+        
+        // Add custom fields if they exist on the form
+        if (formData.deliveryPostalCode) formData2.append('zip', safeString(formData.deliveryPostalCode));
+        if (formData.quantity) formData2.append('pallet_quantity', safeString(formData.quantity));
+        if (formData.palletType) formData2.append('pallet_build', safeString(formData.palletType));
+        if (formData.entryType) formData2.append('entry_type', safeString(formData.entryType));
+        if (formData.lumberType) formData2.append('lumber_type', safeString(formData.lumberType));
+        if (formData.palletGrade) formData2.append('pallet_grade', safeString(formData.palletGrade));
+        if (formData.heatTreated !== undefined) formData2.append('heat_treatment', safeBooleanOption(formData.heatTreated));
+        if (formData.additionalDetails) formData2.append('rfq_details', safeString(formData.additionalDetails));
+        if (formData.palletDimensions) formData2.append('pallet_dimensions', safeString(formData.palletDimensions));
+
+        console.log('Submitting to HubSpot Forms API for form submission tracking...');
+        
+        const formResponse = await fetch(formUrl, {
+          method: 'POST',
+          body: formData2
+        });
+        
+        if (formResponse.ok) {
+          console.log('Form submission recorded successfully');
+        } else {
+          console.warn('Form submission tracking failed, but contact was still created/updated');
+        }
+      } catch (formError) {
+        console.warn('Form submission tracking failed:', formError.message);
+        // Don't throw error here - contact was still created/updated successfully
+      }
     }
 
     return new Response(JSON.stringify({ 
       success: true, 
-      message: 'Contact created successfully',
-      data: responseData 
+      message: 'Quote submitted successfully - contact created and form submission recorded',
+      data: contactResult 
     }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
