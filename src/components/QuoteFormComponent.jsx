@@ -86,9 +86,11 @@ const QuoteFormComponent = () => {
           additionalDetails: ''
         });
         
-        // Scroll to top of form to show success message
+        // Scroll to top of form to show success message, accounting for fixed navigation
         if (formRef.current) {
-          formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          const yOffset = -100; // Offset for fixed navigation bar
+          const y = formRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
         }
       } else {
         throw new Error(result.error);
@@ -100,9 +102,11 @@ const QuoteFormComponent = () => {
         message: 'Sorry, there was an error submitting your quote request. Please try again or contact us directly.'
       });
       
-      // Scroll to top of form to show error message
+      // Scroll to top of form to show error message, accounting for fixed navigation
       if (formRef.current) {
-        formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const yOffset = -100; // Offset for fixed navigation bar
+        const y = formRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
       }
     } finally {
       setIsSubmitting(false);
