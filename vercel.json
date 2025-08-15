@@ -1,7 +1,4 @@
 {
   "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "env": {
-    "HUBSPOT_PRIVATE_API_KEY": "@hubspot-api-key"
-  }
+  "outputDirectory": "dist"
 }
