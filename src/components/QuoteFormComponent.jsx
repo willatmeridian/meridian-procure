@@ -41,6 +41,14 @@ const QuoteFormComponent = () => {
       const { submitToHubSpot, transformFormData } = await import('../lib/hubspot.js');
       const transformedData = transformFormData(formData);
       const quoteFormId = import.meta.env.PUBLIC_HUBSPOT_QUOTE_FORM_ID;
+      
+      console.log('Quote Form Debug:', {
+        originalData: formData,
+        transformedData,
+        quoteFormId,
+        expectedFormId: '60d74e04-e6b4-4d9f-910c-a20c0abba0f9'
+      });
+      
       const result = await submitToHubSpot(transformedData, quoteFormId);
       
       if (result.success) {

@@ -116,5 +116,29 @@ export function transformFormData(formData) {
     }
   });
 
+  // For quote forms, also create a comprehensive message as backup
+  if (formData.quantity || formData.palletType) {
+    const quoteDetails = [
+      'QUOTE REQUEST DETAILS:',
+      formData.company ? `Company: ${formData.company}` : '',
+      formData.deliveryPostalCode ? `Delivery Location: ${formData.deliveryPostalCode}` : '',
+      formData.palletDimensions ? `Pallet Dimensions: ${formData.palletDimensions}` : '',
+      formData.quantity ? `Quantity: ${formData.quantity}` : '',
+      formData.palletType ? `Pallet Type: ${formData.palletType}` : '',
+      formData.entryType ? `Entry Type: ${formData.entryType}` : '',
+      formData.lumberType ? `Lumber Type: ${formData.lumberType}` : '',
+      formData.palletGrade ? `Pallet Grade: ${formData.palletGrade}` : '',
+      formData.heatTreated ? `Heat Treated: ${formData.heatTreated ? 'Yes' : 'No'}` : '',
+      formData.additionalDetails ? `Additional Details: ${formData.additionalDetails}` : ''
+    ].filter(line => line).join('\n');
+    
+    // Add to message field as backup
+    if (!transformed.message) {
+      transformed.message = quoteDetails;
+    } else {
+      transformed.message += '\n\n' + quoteDetails;
+    }
+  }
+
   return transformed;
 }
