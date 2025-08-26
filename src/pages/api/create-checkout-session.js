@@ -97,6 +97,10 @@ export async function POST({ request, url }) {
       // Add phone number to the checkout
       phone_number_collection: {
         enabled: true
+      },
+      // Required when using custom terms of service text
+      consent_collection: {
+        terms_of_service: 'required'
       }
     });
 
