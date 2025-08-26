@@ -23,12 +23,15 @@ export async function POST({ request, url }) {
       price_data: {
         currency: 'usd',
         product_data: {
-          name: item.name,
+          name: `${item.name} - Delivery: ${customerInfo?.location || 'Location TBD'}`,
+          description: `Pallet delivery to ${customerInfo?.location || 'selected location'}`,
           images: item.image ? [item.image.startsWith('/') ? 
             `${url.origin}${item.image}` : item.image] : [],
           metadata: {
             type: 'pallet',
-            category: item.category || 'standard'
+            category: item.category || 'standard',
+            delivery_location: customerInfo?.location || '',
+            delivery_type: 'pallet_delivery'
           }
         },
         unit_amount: Math.round(item.price * 100), // Convert to cents
@@ -64,8 +67,11 @@ export async function POST({ request, url }) {
       billing_address_collection: 'required',
       shipping_address_collection: {
         allowed_countries: ['US'],
+        // You can further restrict to specific states if needed
+        // allowed_countries: ['US'],
+        // For now allowing all US states - can be refined later
       },
-      // Require company name for business purchases
+      // Require company name and show delivery location for business purchases
       custom_fields: [
         {
           key: 'company_name',
@@ -79,6 +85,20 @@ export async function POST({ request, url }) {
             minimum_length: 2
           },
           optional: false // Required field
+        },
+        {
+          key: 'delivery_location_confirmation',
+          label: {
+            type: 'custom',
+            custom: 'Selected Delivery Location'
+          },
+          type: 'text',
+          text: {
+            default_value: customerInfo?.location || 'Not specified',
+            maximum_length: 200,
+            minimum_length: 1
+          },
+          optional: false // Show and require confirmation
         }
       ],
       metadata: {
@@ -89,13 +109,13 @@ export async function POST({ request, url }) {
       // Customize the checkout page with branding and messaging
       custom_text: {
         shipping_address: {
-          message: 'Please provide the delivery address for your pallet order. Our team will coordinate delivery details with you after purchase.'
+          message: `Please provide the exact delivery address for your ${customerInfo?.location || 'selected location'} pallet order. We deliver within a 50-mile radius of our service locations. Our team will coordinate delivery details and confirm feasibility after purchase.`
         },
         submit: {
-          message: 'Questions? Call us at 1-800-PALLETS or email info@meridianprocure.com. We\'ll process your order and contact you within 24 hours to confirm delivery details.'
+          message: 'Questions? Call us at 1-800-PALLETS or email info@meridianprocure.com. We\'ll process your order and contact you within 24 hours to confirm delivery details and scheduling.'
         },
         terms_of_service_acceptance: {
-          message: 'By completing your purchase, you agree to our terms of service and delivery policies.'
+          message: 'By completing your purchase, you agree to our terms of service, delivery policies, and service area restrictions.'
         }
       },
       // Add phone number to the checkout
