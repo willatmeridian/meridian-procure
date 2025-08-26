@@ -105,7 +105,9 @@ export async function POST({ request, url }) {
       // Required when using custom terms of service text
       consent_collection: {
         terms_of_service: 'required'
-      }
+      },
+      // Enable promo codes and discounts
+      allow_promotion_codes: true
     });
 
     console.log('Checkout session created successfully:');
