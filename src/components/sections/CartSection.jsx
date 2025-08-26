@@ -191,7 +191,7 @@ export default function CartSection() {
 
       const customerInfo = {
         location: selectedCity ? `${selectedCity.name}, ${selectedCity.state}` : selectedLocation,
-        email: '', // This will be collected by Stripe Checkout
+        // Don't send empty email - let Stripe collect it
       };
 
       // Call your API to create checkout session

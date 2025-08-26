@@ -55,7 +55,8 @@ export async function POST({ request, url }) {
       mode: 'payment',
       success_url: `${url.origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${url.origin}/buy-now`,
-      customer_email: customerInfo?.email,
+      // Only set customer_email if it's provided and valid, otherwise let Stripe collect it
+      ...(customerInfo?.email && customerInfo.email.trim() !== '' ? { customer_email: customerInfo.email } : {}),
       billing_address_collection: 'required',
       shipping_address_collection: {
         allowed_countries: ['US'],
