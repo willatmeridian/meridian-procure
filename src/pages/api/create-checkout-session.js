@@ -14,6 +14,10 @@ export async function POST({ request, url }) {
     const stripe = new Stripe(stripeSecretKey);
     const { items, customerInfo } = await request.json();
 
+    console.log('Creating checkout session with Stripe key type:', stripeSecretKey.startsWith('sk_live_') ? 'LIVE' : 'TEST');
+    console.log('Items received:', items.length);
+    console.log('Customer info:', customerInfo);
+
     // Calculate line items for Stripe
     const lineItems = items.map(item => ({
       price_data: {
@@ -103,6 +107,11 @@ export async function POST({ request, url }) {
         terms_of_service: 'required'
       }
     });
+
+    console.log('Checkout session created successfully:');
+    console.log('Session ID:', session.id);
+    console.log('Session URL:', session.url);
+    console.log('Session mode:', session.mode);
 
     return new Response(
       JSON.stringify({ sessionId: session.id, url: session.url }),
