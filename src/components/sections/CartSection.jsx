@@ -195,6 +195,8 @@ export default function CartSection() {
       };
 
       // Call your API to create checkout session
+      console.log('Creating checkout session with:', { items: checkoutItems, customerInfo });
+      
       const response = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: {
@@ -206,9 +208,21 @@ export default function CartSection() {
         }),
       });
 
-      const { sessionId, url, error } = await response.json();
+      console.log('Checkout API response status:', response.status);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Checkout API error:', errorText);
+        throw new Error(`Checkout failed: ${response.status} - ${errorText}`);
+      }
+
+      const responseData = await response.json();
+      console.log('Checkout API response data:', responseData);
+      
+      const { sessionId, url, error } = responseData;
 
       if (error) {
+        console.error('Checkout session error:', error);
         throw new Error(error);
       }
 
@@ -228,8 +242,9 @@ export default function CartSection() {
         }
       }
     } catch (error) {
-      console.error('Checkout error:', error);
-      alert('There was an error processing your checkout. Please try again.');
+      console.error('Checkout error details:', error);
+      const errorMessage = error.message || 'Unknown error occurred';
+      alert(`Checkout Error: ${errorMessage}\n\nPlease check the browser console for more details and try again.`);
     } finally {
       setIsCheckingOut(false);
     }
