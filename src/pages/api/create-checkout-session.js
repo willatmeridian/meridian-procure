@@ -61,16 +61,42 @@ export async function POST({ request, url }) {
       shipping_address_collection: {
         allowed_countries: ['US'],
       },
+      // Require company name for business purchases
+      custom_fields: [
+        {
+          key: 'company_name',
+          label: {
+            type: 'custom',
+            custom: 'Company Name'
+          },
+          type: 'text',
+          text: {
+            maximum_length: 100,
+            minimum_length: 2
+          },
+          optional: false // Required field
+        }
+      ],
       metadata: {
         customerLocation: customerInfo?.location || '',
         totalPallets: totalPallets.toString(),
         orderType: 'online_purchase'
       },
-      // Customize the checkout page
+      // Customize the checkout page with branding and messaging
       custom_text: {
+        shipping_address: {
+          message: 'Please provide the delivery address for your pallet order. Our team will coordinate delivery details with you after purchase.'
+        },
         submit: {
-          message: 'We\'ll process your order and contact you within 24 hours to confirm delivery details.'
+          message: 'Questions? Call us at 1-800-PALLETS or email info@meridianprocure.com. We\'ll process your order and contact you within 24 hours to confirm delivery details.'
+        },
+        terms_of_service_acceptance: {
+          message: 'By completing your purchase, you agree to our terms of service and delivery policies.'
         }
+      },
+      // Add phone number to the checkout
+      phone_number_collection: {
+        enabled: true
       }
     });
 
