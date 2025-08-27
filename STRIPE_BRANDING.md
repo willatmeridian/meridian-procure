@@ -15,7 +15,7 @@ I've added the following customizations to your checkout session:
 
 ### 3. **Custom Messaging with Contact Info**
 - **Shipping address message**: Explains delivery coordination
-- **Submit button message**: Includes your phone (1-800-PALLETS) and email
+- **Submit button message**: Includes your phone (214) 444-8963 and email
 - **Terms message**: References your terms of service
 
 ### 4. **Enhanced Success Page**
@@ -46,7 +46,7 @@ To add your company branding to the checkout page, go to your **Stripe Dashboard
 1. Go to **Settings** → **Business settings**
 2. Add your business details:
    - **Business name**: "Meridian Procure"
-   - **Support phone**: "1-800-PALLETS"
+   - **Support phone**: "(214) 444-8963"
    - **Support email**: "info@meridianprocure.com"
    - **Website**: Your domain
 
