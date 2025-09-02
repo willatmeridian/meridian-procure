@@ -32,23 +32,27 @@ const cities = [
 const stripePromise = loadStripe(import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 export default function CartSection() {
-  // Check URL params for pre-selected location
-  const urlParams = new URLSearchParams(window.location.search);
-  const preselectedLocation = urlParams.get('location');
-  
-  const [selectedLocation, setSelectedLocation] = useState(preselectedLocation || '');
+  // Check URL params for pre-selected location (only in browser)
+  const [preselectedLocation, setPreselectedLocation] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState('');
   const [cart, setCart] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [palletData, setPalletData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
-  // Auto-load pallet data if location is preselected
+  // Check for URL parameters and auto-load location on component mount
   useEffect(() => {
-    if (preselectedLocation) {
-      handleLocationSelect(preselectedLocation);
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const locationParam = urlParams.get('location');
+      if (locationParam) {
+        setPreselectedLocation(locationParam);
+        setSelectedLocation(locationParam);
+        handleLocationSelect(locationParam);
+      }
     }
-  }, [preselectedLocation]);
+  }, []);
 
   const handleLocationSelect = async (locationSlug) => {
     setSelectedLocation(locationSlug);
