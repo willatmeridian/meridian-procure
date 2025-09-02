@@ -53,9 +53,10 @@ function CartSection() {
         handleLocationSelect(locationParam);
       }
     }
-  }, []);
+  }, [handleLocationSelect]);
 
-  const handleLocationSelect = async (locationSlug) => {
+  const handleLocationSelect = useCallback(async (locationSlug) => {
+    console.log('handleLocationSelect called with:', locationSlug);
     setSelectedLocation(locationSlug);
     setCart([]); // Clear cart when location changes
     setQuantities({}); // Clear quantities
@@ -63,6 +64,7 @@ function CartSection() {
     if (locationSlug) {
       setLoading(true);
       try {
+        console.log('Fetching data for location:', locationSlug);
         const cmsData = await getCityPalletPricing(locationSlug);
         console.log('Raw CMS data:', cmsData);
         
@@ -101,7 +103,7 @@ function CartSection() {
     } else {
       setPalletData([]);
     }
-  };
+  }, []);
 
   const getAvailablePallets = () => {
     return palletData;
@@ -278,6 +280,9 @@ function CartSection() {
 
   const selectedCity = cities.find(city => city.slug === selectedLocation);
   const availableProducts = getAvailablePallets();
+
+  // Debug logging
+  console.log('CartSection render:', { selectedLocation, selectedCity, availableProducts: availableProducts.length, loading });
 
   return (
     <section className="w-full py-12 sm:py-16 bg-gray-50">
