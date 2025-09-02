@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
 import { getCityPalletPricing } from '../../lib/sanity/client.js';
 import { loadStripe } from '@stripe/stripe-js';
+import { useDebounceCallback } from '../../hooks/useDebounce.js';
 
 // City data sorted alphabetically
 const cities = [
@@ -31,7 +32,7 @@ const cities = [
 // Initialize Stripe
 const stripePromise = loadStripe(import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
-export default function CartSection() {
+const CartSection = memo(function CartSection() {
   // Check URL params for pre-selected location (only in browser)
   const [preselectedLocation, setPreselectedLocation] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
@@ -106,7 +107,7 @@ export default function CartSection() {
     return palletData;
   };
 
-  const addToCart = (pallet, quantity) => {
+  const addToCart = useCallback((pallet, quantity) => {
     const qty = parseInt(quantity);
     
     // Validate quantity before adding to cart
@@ -140,25 +141,21 @@ export default function CartSection() {
     } else {
       setCart([...cart, cartItem]);
     }
-  };
+  }, [cart, selectedLocation]);
 
-  const removeFromCart = (palletId) => {
+  const removeFromCart = useCallback((palletId) => {
     setCart(cart.filter(item => item.id !== palletId));
-  };
+  }, [cart]);
 
-  const updateQuantity = (palletId, newQuantity) => {
+  // Debounced quantity update for better performance
+  const debouncedUpdateQuantity = useDebounceCallback((palletId, newQuantity) => {
     const qty = parseInt(newQuantity);
     
-    // Allow any input while typing, but validate on blur/enter
     const updatedCart = cart.map(item => {
       if (item.id === palletId) {
         // If quantity is valid, update it
         if (!isNaN(qty) && qty >= 100 && qty <= 615) {
           return { ...item, quantity: qty };
-        }
-        // If invalid but user is still typing (empty or partial), keep the string value temporarily
-        if (newQuantity === '' || newQuantity === '0') {
-          return { ...item, quantity: newQuantity };
         }
         // If invalid number, revert to minimum
         return { ...item, quantity: 100 };
@@ -166,28 +163,42 @@ export default function CartSection() {
       return item;
     });
     setCart(updatedCart);
-  };
+  }, 300);
 
-  const calculateSubtotal = () => {
+  const updateQuantity = useCallback((palletId, newQuantity) => {
+    // Allow immediate input display for responsiveness
+    const updatedCart = cart.map(item => {
+      if (item.id === palletId) {
+        return { ...item, quantity: newQuantity };
+      }
+      return item;
+    });
+    setCart(updatedCart);
+    
+    // Debounced validation and final update
+    debouncedUpdateQuantity(palletId, newQuantity);
+  }, [cart, debouncedUpdateQuantity]);
+
+  const calculateSubtotal = useMemo(() => {
     return cart.reduce((total, item) => {
       const qty = parseInt(item.quantity) || 0;
       return total + (item.price * qty);
     }, 0);
-  };
+  }, [cart]);
 
-  const calculateShipping = () => {
+  const calculateShipping = useMemo(() => {
     const totalPallets = cart.reduce((total, item) => {
       const qty = parseInt(item.quantity) || 0;
       return total + qty;
     }, 0);
     return totalPallets >= 550 ? 0 : 300;
-  };
+  }, [cart]);
 
-  const calculateTotal = () => {
-    return calculateSubtotal() + calculateShipping();
-  };
+  const calculateTotal = useMemo(() => {
+    return calculateSubtotal + calculateShipping;
+  }, [calculateSubtotal, calculateShipping]);
 
-  const handleCheckout = async () => {
+  const handleCheckout = useCallback(async () => {
     if (cart.length === 0) return;
     
     setIsCheckingOut(true);
@@ -263,7 +274,7 @@ export default function CartSection() {
     } finally {
       setIsCheckingOut(false);
     }
-  };
+  }, [cart, selectedLocation]);
 
   const selectedCity = cities.find(city => city.slug === selectedLocation);
   const availableProducts = getAvailablePallets();
@@ -565,4 +576,6 @@ export default function CartSection() {
       </div>
     </section>
   );
-}
+});
+
+export default CartSection;
