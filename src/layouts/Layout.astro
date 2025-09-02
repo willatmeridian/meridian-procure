@@ -3,23 +3,94 @@ import '../styles/global.css'
 
 interface Props {
 	title?: string;
+	description?: string;
+	keywords?: string;
+	canonical?: string;
+	ogImage?: string;
 }
 
-const { title = "Astro Basics" } = Astro.props;
+const { 
+	title = "Meridian | Industrial Pallet Solutions & Supply Chain Excellence",
+	description = "Leading provider of high-quality industrial pallets across 20+ US locations. Custom pallets, recycled options, and heat-treated solutions. Fast delivery, competitive pricing, expert supply chain support.",
+	keywords = "industrial pallets, custom pallets, recycled pallets, heat treated pallets, pallet supplier, supply chain solutions, logistics, pallet delivery, wooden pallets",
+	canonical,
+	ogImage = "/img/meridian-og-image.jpg"
+} = Astro.props;
+
+// Get current URL for canonical
+const currentUrl = canonical || new URL(Astro.request.url).href;
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		
+		<!-- Primary SEO Elements -->
 		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta name="keywords" content={keywords} />
+		<link rel="canonical" href={currentUrl} />
+		
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={currentUrl} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:site_name" content="Meridian" />
+		
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:url" content={currentUrl} />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+		
+		<!-- Additional SEO -->
+		<meta name="robots" content="index, follow" />
+		<meta name="author" content="Meridian" />
+		<meta name="language" content="en-US" />
+		<meta name="revisit-after" content="7 days" />
+		
+		<!-- Business Information -->
+		<meta name="geo.region" content="US" />
+		<meta name="geo.placename" content="United States" />
+		<meta name="business:contact_data:phone_number" content="+12144448963" />
+		<meta name="business:contact_data:website" content="https://meridian-procure.vercel.app" />
 		
 		<!-- Preload critical hero images for better LCP -->
 		<link rel="preload" as="image" href="/img/hero/homepage-mobile.webp" media="(max-width: 768px)" />
 		<link rel="preload" as="image" href="/img/hero/homepage-desktop.webp" media="(min-width: 769px)" />
+		
+		<!-- Structured Data - Organization -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "Organization",
+			"name": "Meridian",
+			"description": "Leading provider of industrial pallet solutions and supply chain excellence",
+			"url": "https://meridian-procure.vercel.app",
+			"telephone": "+1-214-444-8963",
+			"email": "info@meridianprocure.com",
+			"address": {
+				"@type": "PostalAddress",
+				"addressCountry": "US"
+			},
+			"sameAs": [
+				"https://www.linkedin.com/company/meridian-procure"
+			],
+			"contactPoint": {
+				"@type": "ContactPoint",
+				"telephone": "+1-214-444-8963",
+				"contactType": "customer service",
+				"availableLanguage": "English"
+			}
+		}
+		</script>
 	</head>
 	<body>
 		<slot />

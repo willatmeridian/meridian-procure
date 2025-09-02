@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Block admin and checkout pages
+Disallow: /api/
+Disallow: /checkout/
+Disallow: /*?*
+Disallow: /admin/
+
+# Allow important directories
+Allow: /img/
+Allow: /css/
+Allow: /js/
+
+# Sitemap location
+Sitemap: https://meridian-procure.vercel.app/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1
