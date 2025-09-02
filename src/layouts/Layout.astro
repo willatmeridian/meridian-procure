@@ -66,6 +66,93 @@ const currentUrl = canonical || new URL(Astro.request.url).href;
 		<link rel="preload" as="image" href="/img/hero/homepage-mobile.webp" media="(max-width: 768px)" />
 		<link rel="preload" as="image" href="/img/hero/homepage-desktop.webp" media="(min-width: 769px)" />
 		
+		<!-- DNS prefetch for external resources -->
+		<link rel="dns-prefetch" href="//fonts.googleapis.com" />
+		<link rel="dns-prefetch" href="//fonts.gstatic.com" />
+		
+		<!-- Preload critical fonts for better CLS -->
+		<link rel="preload" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+		<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" /></noscript>
+		
+		<!-- Critical CSS for above-the-fold content -->
+		<style>
+			/* Critical styles for above-fold content */
+			body {
+				font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+				margin: 0;
+				line-height: 1.5;
+				background-color: white;
+			}
+			
+			/* Navigation critical styles */
+			nav {
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				z-index: 50;
+				background-color: white;
+				box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+				padding-bottom: 12px;
+			}
+			
+			@media (min-width: 640px) {
+				nav {
+					padding-bottom: 20px;
+				}
+			}
+			
+			/* Hero section critical styles */
+			.hero-section, section.relative {
+				position: relative;
+				width: 100%;
+				height: 600px;
+				margin-top: 60px;
+				background-color: #374151;
+			}
+			
+			@media (min-width: 640px) {
+				.hero-section, section.relative {
+					height: 700px;
+					margin-top: 88px;
+				}
+			}
+			
+			@media (min-width: 1024px) {
+				.hero-section, section.relative {
+					height: 964px;
+				}
+			}
+			
+			/* Prevent layout shift */
+			img {
+				max-width: 100%;
+				height: auto;
+			}
+			
+			/* Font display optimization */
+			@font-face {
+				font-family: 'Instrument Sans';
+				font-display: swap;
+			}
+			
+			/* Critical layout containers */
+			.max-w-1440 {
+				max-width: 1440px;
+				margin: 0 auto;
+			}
+			
+			/* Performance optimizations */
+			* {
+				box-sizing: border-box;
+			}
+			
+			/* Reduce paint complexity */
+			.fixed {
+				transform: translateZ(0);
+			}
+		</style>
+		
 		<!-- Structured Data - Organization -->
 		<script type="application/ld+json">
 		{

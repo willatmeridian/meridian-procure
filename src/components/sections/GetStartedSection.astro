@@ -17,7 +17,7 @@ const palletProducts = [
     description: "Great quality, built to last with minor repairs.",
     price: "$10",
     minQuantity: "Minimum of 100",
-    image: "url(/img/48x40-grade-a-stringer-wooden-pallet.png)",
+    image: "url(/img/48x40-grade-a-stringer-wooden-pallet.webp)",
     buyLink: "/buy-now",
     specs: [
       { icon: "/img/component-3-5.svg", text: "Dimensions: 48x40" },
@@ -40,7 +40,7 @@ const palletProducts = [
     description: "Affordable, multiple repairs but sturdy.",
     price: "$8",
     minQuantity: "Minimum of 100",
-    image: "url(/img/48x40-grade-b-stringer-wooden-pallet.png)",
+    image: "url(/img/48x40-grade-b-stringer-wooden-pallet.webp)",
     buyLink: "/buy-now",
     specs: [
       { icon: "/img/component-3-6.svg", text: "Dimension: 48x40" },
@@ -63,7 +63,7 @@ const palletProducts = [
     description: "Highest grade, like-new condition.",
     price: "$12",
     minQuantity: "Minimum of 50",
-    image: "url(/img/aaa-pallets.png)", // You'll upload this image
+    image: "url(/img/aaa-pallets.webp)",
     buyLink: "/buy-now",
     specs: [
       { icon: "/img/component-3-5.svg", text: "Dimensions: 48x40" },
@@ -86,7 +86,7 @@ const palletProducts = [
     description: "Volume orders, better pricing.",
     price: "Volume Pricing",
     minQuantity: "500+ pallets",
-    image: "url(/img/bulk-ordering.png)", // You'll upload this image
+    image: "url(/img/bulk-ordering.webp)",
     buyLink: "#quote-form",
     buttonText: "Get Quote",
     specs: [
@@ -101,7 +101,7 @@ const palletProducts = [
     description: "Need a unique pallet? We've got you.",
     price: "Low Pricing",
     minQuantity: "Quantities vary",
-    image: "url(/img/custom-sizing-wooden-stringer-or-block-pallet.png)",
+    image: "url(/img/custom-sizing-wooden-stringer-or-block-pallet.webp)",
     buyLink: "#quote-form",
     buttonText: "Get Quote",
     customizations: [
@@ -188,6 +188,7 @@ const palletProducts = [
                         class="h-4 w-auto object-cover"
                         alt="Icon"
                         src={item.icon}
+                        loading="lazy"
                       />
                     </div>
                     <div class="flex-1 pb-[11.2px]">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Button } from "./ui/button";
 
 const NavigationBarSection = () => {
@@ -25,9 +25,9 @@ const NavigationBarSection = () => {
     { label: "Contact", href: "/contact" },
   ];
 
-  const toggleMobileMenu = () => {
+  const toggleMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+  }, [isMobileMenuOpen]);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm pb-3 sm:pb-5">
@@ -38,7 +38,8 @@ const NavigationBarSection = () => {
           <img
             className="w-[180px] sm:w-[220px] lg:w-[255px] h-[42px] sm:h-[51px] lg:h-[59px] object-cover cursor-pointer"
             alt="Meridian logo one"
-            src="/img/meridian-logo-one-01-tb-1-1.png"
+            src="/img/meridian-logo-one-01-tb-1-1.webp"
+            loading="eager"
           />
         </a>
       </div>

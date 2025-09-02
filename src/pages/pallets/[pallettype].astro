@@ -19,7 +19,7 @@ export async function getStaticPaths() {
       props: {
         palletName: 'Recycled Pallets',
         palletDescription: 'Our recycled pallet program supports environmental sustainability while providing cost-effective solutions. These pallets are sourced from various industries, inspected, repaired as needed, and returned to service. By choosing recycled pallets, you reduce waste and support the circular economy.',
-        palletImage: '/img/48x40-grade-b-stringer-wooden-pallet.png',
+        palletImage: '/img/48x40-grade-b-stringer-wooden-pallet.webp',
         palletPrice: null,
         palletSpecs: [
           'Dimensions: Various sizes available',
@@ -40,7 +40,7 @@ export async function getStaticPaths() {
       props: {
         palletName: 'New & Custom Pallets',
         palletDescription: 'Need pallets built to your exact specifications? Our custom pallet manufacturing service creates pallets tailored to your unique requirements. From non-standard dimensions to specialized materials, we work with you to design and build pallets that perfectly fit your application.',
-        palletImage: '/img/custom-sizing-wooden-stringer-or-block-pallet.png',
+        palletImage: '/img/custom-sizing-wooden-stringer-or-block-pallet.webp',
         palletPrice: null,
         palletSpecs: [
           'Dimensions: Custom sizing available',
@@ -61,7 +61,7 @@ export async function getStaticPaths() {
       props: {
         palletName: 'Heat Treated Pallets',
         palletDescription: 'ISPM-15 certified heat treated pallets are essential for international shipping compliance. Our heat treatment process eliminates pests and pathogens while maintaining the structural integrity of the wood. These pallets meet international standards and come with proper certification.',
-        palletImage: '/img/48x40-grade-a-stringer-wooden-pallet.png',
+        palletImage: '/img/48x40-grade-a-stringer-wooden-pallet.webp',
         palletPrice: null,
         palletSpecs: [
           'Dimensions: 48x40 inches (Standard GMA)',
@@ -108,7 +108,7 @@ if (Astro.props.isFromSanity) {
     if (sanityData) {
       palletName = sanityData.name;
       palletDescription = sanityData.description;
-      palletImage = sanityData.imageUrl || '/img/default-pallet.png';
+      palletImage = sanityData.imageUrl || '/img/default-pallet.webp';
       palletPrice = sanityData.basePrice;
       palletSpecs = sanityData.specifications || [];
       heroTitle = `${sanityData.name}`;
@@ -147,7 +147,7 @@ if (Astro.props.isFromSanity) {
             <img
               class="absolute w-full h-full top-0 left-0 object-cover"
               alt="Horizontal lumber background"
-              src="/img/horizontal-lumber.png"
+              src="/img/horizontal-lumber.webp"
               loading="eager"
               fetchpriority="high"
               decoding="async"

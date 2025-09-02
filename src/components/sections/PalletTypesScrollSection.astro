@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 const palletTypes = [
   {
     name: "Grade A Pallets",
-    image: "/img/48x40-grade-a-stringer-wooden-pallet.png",
+    image: "/img/48x40-grade-a-stringer-wooden-pallet.webp",
     price: "$10",
     specs: [
       "Dimensions: 48x40",
@@ -15,7 +15,7 @@ const palletTypes = [
   },
   {
     name: "Grade B Pallets", 
-    image: "/img/48x40-grade-b-stringer-wooden-pallet.png",
+    image: "/img/48x40-grade-b-stringer-wooden-pallet.webp",
     price: "$8",
     specs: [
       "Dimensions: 48x40",
@@ -26,7 +26,7 @@ const palletTypes = [
   },
   {
     name: "Custom Pallets",
-    image: "/img/custom-sizing-wooden-stringer-or-block-pallet.png",
+    image: "/img/custom-sizing-wooden-stringer-or-block-pallet.webp",
     price: "Low Pricing",
     specs: [
       "Heat Treatment",
@@ -54,6 +54,7 @@ const palletTypes = [
                   src={pallet.image} 
                   alt={pallet.name}
                   class="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </div>
               

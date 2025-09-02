@@ -1,23 +1,23 @@
 ---
 const palletImages = [
   {
-    src: "/img/48x40-grade-a-stringer-wooden-pallet.png",
+    src: "/img/48x40-grade-a-stringer-wooden-pallet.webp",
     alt: "Grade A Wooden Pallet"
   },
   {
-    src: "/img/48x40-grade-b-stringer-wooden-pallet.png", 
+    src: "/img/48x40-grade-b-stringer-wooden-pallet.webp", 
     alt: "Grade B Wooden Pallet"
   },
   {
-    src: "/img/custom-sizing-wooden-stringer-or-block-pallet.png",
+    src: "/img/custom-sizing-wooden-stringer-or-block-pallet.webp",
     alt: "Custom Wooden Pallet"
   },
   {
-    src: "/img/48x40-grade-a-stringer-wooden-pallet.png",
+    src: "/img/48x40-grade-a-stringer-wooden-pallet.webp",
     alt: "Premium Wooden Pallet"
   },
   {
-    src: "/img/48x40-grade-b-stringer-wooden-pallet.png",
+    src: "/img/48x40-grade-b-stringer-wooden-pallet.webp",
     alt: "Standard Wooden Pallet" 
   }
 ];
@@ -34,6 +34,7 @@ const palletImages = [
               src={image.src}
               alt={image.alt}
               class="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
         ))}

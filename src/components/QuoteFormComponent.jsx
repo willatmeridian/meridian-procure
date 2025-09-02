@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback, useMemo } from 'react';
 import { submitToHubSpot, transformFormData } from '../lib/hubspot.js';
 
 const QuoteFormComponent = () => {
@@ -23,13 +23,13 @@ const QuoteFormComponent = () => {
   const [submitStatus, setSubmitStatus] = useState(null);
   const formRef = useRef(null);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = useCallback((e) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
-  };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

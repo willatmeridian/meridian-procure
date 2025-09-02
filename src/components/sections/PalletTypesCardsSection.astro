@@ -4,37 +4,37 @@ import { Button } from "../ui/button";
 const palletTypes = [
   {
     name: "AAA GMA 48x40",
-    image: "/img/48x40-grade-a-stringer-wooden-pallet.png",
+    image: "/img/48x40-grade-a-stringer-wooden-pallet.webp",
     description: "Top-tier premium pallets meeting GMA standards with superior quality and durability.",
     link: "/pallets/aaa-gma"
   },
   {
     name: "Grade A 48x40",
-    image: "/img/48x40-grade-a-stringer-wooden-pallet.png",
+    image: "/img/48x40-grade-a-stringer-wooden-pallet.webp",
     description: "Premium quality, built to last with minimal wear and maximum durability.",
     link: "/pallets/grade-a"
   },
   {
     name: "Grade B 48x40",
-    image: "/img/48x40-grade-b-stringer-wooden-pallet.png", 
+    image: "/img/48x40-grade-b-stringer-wooden-pallet.webp", 
     description: "Affordable, sturdy pallets with signs of wear but reliable performance.",
     link: "/pallets/grade-b"
   },
   {
     name: "New / Custom Pallets",
-    image: "/img/custom-sizing-wooden-stringer-or-block-pallet.png",
+    image: "/img/custom-sizing-wooden-stringer-or-block-pallet.webp",
     description: "Brand new pallets or custom solutions built to your specific requirements.",
     link: "/pallets/new-custom"
   },
   {
     name: "Recycled Pallets",
-    image: "/img/48x40-grade-b-stringer-wooden-pallet.png",
+    image: "/img/48x40-grade-b-stringer-wooden-pallet.webp",
     description: "Environmentally conscious pallet solutions that maintain quality and performance.",
     link: "/pallets/recycled"
   },
   {
     name: "Heat-Treated Pallets",
-    image: "/img/48x40-grade-a-stringer-wooden-pallet.png",
+    image: "/img/48x40-grade-a-stringer-wooden-pallet.webp",
     description: "ISPM-15 certified heat treated pallets for international shipping compliance.",
     link: "/pallets/heat-treated"
   }
@@ -63,6 +63,7 @@ const palletTypes = [
               src={pallet.image}
               alt={pallet.name}
               class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+              loading="lazy"
             />
             <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
           </div>

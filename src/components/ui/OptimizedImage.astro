@@ -1,0 +1,41 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+  width?: number;
+  height?: number;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  sizes?: string;
+}
+
+const { 
+  src, 
+  alt, 
+  class: className = '',
+  width,
+  height,
+  loading = 'lazy',
+  fetchpriority = 'auto',
+  sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+} = Astro.props;
+
+// Convert PNG to WebP if not already
+const webpSrc = src.replace(/\.(png|jpg|jpeg)$/i, '.webp');
+const fallbackSrc = src;
+---
+
+<picture>
+  <source srcset={webpSrc} type="image/webp" sizes={sizes} />
+  <img
+    src={fallbackSrc}
+    alt={alt}
+    class={className}
+    width={width}
+    height={height}
+    loading={loading}
+    fetchpriority={fetchpriority}
+    decoding="async"
+  />
+</picture>

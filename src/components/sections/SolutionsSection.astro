@@ -37,16 +37,18 @@ const solutionCards = [
           <div class="flex flex-col items-center justify-center flex-grow">
             {index === 0 && (
               <img 
-                src="/img/national-solutions-icon.png" 
+                src="/img/national-solutions-icon.webp" 
                 alt="National Solutions Icon" 
                 class="w-[280px] h-[280px] mb-6 mt-[120px]"
+                loading="lazy"
               />
             )}
             {index === 1 && (
               <img 
-                src="/img/buy-pallets-now-icon.png" 
+                src="/img/buy-pallets-now-icon.webp" 
                 alt="Buy Pallets Now Icon" 
                 class="w-[280px] h-[280px] mb-6 mt-[120px]"
+                loading="lazy"
               />
             )}
             <h3 class={`font-semibold text-2xl text-center tracking-[0] leading-[25.6px] px-12 [font-family:'Instrument_Sans',Helvetica] text-gray-900 ${(index === 0 || index === 1) ? 'mt-0' : 'mt-[213px]'}`}>

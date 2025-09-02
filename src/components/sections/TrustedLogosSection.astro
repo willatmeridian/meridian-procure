@@ -1,9 +1,9 @@
 ---
 // Individual logo data
 const logos = [
-  { src: "/img/pot-logo-5.png", alt: "POT Company logo" },
-  { src: "/img/koch-companies-logo.png", alt: "Koch Companies logo" },
-  { src: "/img/tnt-fireworks-logo.png", alt: "TNT Fireworks logo" },
+  { src: "/img/pot-logo-5.webp", alt: "POT Company logo" },
+  { src: "/img/koch-companies-logo.webp", alt: "Koch Companies logo" },
+  { src: "/img/tnt-fireworks-logo.webp", alt: "TNT Fireworks logo" },
 ];
 
 // Duplicate logos multiple times for seamless scrolling
@@ -24,6 +24,7 @@ const logoItems = [...logos, ...logos, ...logos, ...logos];
             class="w-[205px] h-[155px] object-contain flex-shrink-0"
             alt={logo.alt}
             src={logo.src}
+            loading="lazy"
           />
         ))}
       </div>

@@ -12,7 +12,7 @@ interface Props {
 const { 
   palletName = "Grade A Pallets",
   palletDescription = "Our Grade A pallets represent the highest quality recycled pallets available in the market. These pallets have been carefully inspected and refurbished to meet strict quality standards, ensuring maximum durability and reliability for your shipping and storage needs.",
-  palletImage = "/img/48x40-grade-a-stringer-wooden-pallet.png",
+  palletImage = "/img/48x40-grade-a-stringer-wooden-pallet.webp",
   palletSpecs = [
     "Dimensions: 48x40 inches",
     "Material: High-quality hardwood",
@@ -74,6 +74,7 @@ const {
             src={palletImage}
             alt={palletName}
             class="w-full h-96 object-cover"
+            loading="lazy"
           />
           <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
         </div>

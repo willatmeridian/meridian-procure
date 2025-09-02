@@ -56,7 +56,7 @@ export default function CartSection() {
           .map(pallet => ({
             id: pallet.slug,
             name: pallet.name,
-            image: pallet.imageUrl || "/img/48x40-grade-a-stringer-wooden-pallet.png",
+            image: pallet.imageUrl || "/img/48x40-grade-a-stringer-wooden-pallet.webp",
             description: pallet.shortDescription || pallet.description || "Premium pallet solution",
             category: pallet.category,
             locationPricing: {
@@ -345,6 +345,7 @@ export default function CartSection() {
                               src={pallet.image}
                               alt={pallet.name}
                               className="w-full h-full object-cover"
+                              loading="lazy"
                             />
                           </div>
                           
@@ -432,6 +433,7 @@ export default function CartSection() {
                           src={item.image}
                           alt={item.name}
                           className="w-12 h-12 rounded object-cover"
+                          loading="lazy"
                         />
                         <div className="flex-1">
                           <h5 className="font-semibold text-sm [font-family:'Instrument_Sans',Helvetica]">

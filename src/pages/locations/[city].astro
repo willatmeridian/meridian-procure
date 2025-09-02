@@ -33,7 +33,7 @@ export async function getStaticPaths() {
     props: {
       cityName: city.cityName,
       cityDescription: city.cityDescription,
-      cityImage: `/img/chatgpt-image-jul-17-2025-02-44-50-pm-1.png`,
+      cityImage: `/img/chatgpt-image-jul-17-2025-02-44-50-pm-1.webp`,
       heroTitle: city.heroTitle,
       heroSubtitle: city.heroSubtitle,
       state: city.state,
@@ -52,7 +52,7 @@ if (Astro.props.isFromSanity) {
     if (sanityData) {
       cityName = sanityData.cityName;
       cityDescription = sanityData.cityDescription;
-      cityImage = sanityData.cityImageUrl || `/img/chatgpt-image-jul-17-2025-02-44-50-pm-1.png`;
+      cityImage = sanityData.cityImageUrl || `/img/chatgpt-image-jul-17-2025-02-44-50-pm-1.webp`;
       heroTitle = sanityData.heroTitle;
       heroSubtitle = sanityData.heroSubtitle;
     }
@@ -63,7 +63,7 @@ if (Astro.props.isFromSanity) {
     if (fallbackCity) {
       cityName = fallbackCity.cityName;
       cityDescription = fallbackCity.cityDescription;
-      cityImage = `/img/chatgpt-image-jul-17-2025-02-44-50-pm-1.png`;
+      cityImage = `/img/chatgpt-image-jul-17-2025-02-44-50-pm-1.webp`;
       heroTitle = fallbackCity.heroTitle;
       heroSubtitle = fallbackCity.heroSubtitle;
     }
