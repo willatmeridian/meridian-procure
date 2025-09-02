@@ -53,7 +53,7 @@ function CartSection() {
         handleLocationSelect(locationParam);
       }
     }
-  }, [handleLocationSelect]);
+  }, []);
 
   const handleLocationSelect = useCallback(async (locationSlug) => {
     console.log('handleLocationSelect called with:', locationSlug);
