@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback, memo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { getCityPalletPricing } from '../../lib/sanity/client.js';
 import { loadStripe } from '@stripe/stripe-js';
 import { useDebounceCallback } from '../../hooks/useDebounce.js';
@@ -32,7 +32,7 @@ const cities = [
 // Initialize Stripe
 const stripePromise = loadStripe(import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
-const CartSection = memo(function CartSection() {
+function CartSection() {
   // Check URL params for pre-selected location (only in browser)
   const [preselectedLocation, setPreselectedLocation] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
@@ -576,6 +576,6 @@ const CartSection = memo(function CartSection() {
       </div>
     </section>
   );
-});
+}
 
 export default CartSection;
