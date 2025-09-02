@@ -1,6 +1,12 @@
 ---
 import { Button } from "../ui/button";
 
+interface Props {
+  citySlug?: string;
+}
+
+const { citySlug } = Astro.props;
+
 // Form fields data
 const formFields = [
   { id: "firstName", label: "First Name", required: true, type: "text" },
@@ -10,6 +16,11 @@ const formFields = [
   { id: "company", label: "Company name", required: false, type: "text" },
 ];
 
+// Generate buy link with location parameter if citySlug is provided
+const generateBuyLink = (basePath = "/buy-now") => {
+  return citySlug ? `${basePath}?location=${citySlug}` : basePath;
+};
+
 // Pallet product data - ordered as requested: Grade A, Grade B, AAA Pallets, Bulk Ordering, Custom Pallets
 const palletProducts = [
   {
@@ -18,7 +29,7 @@ const palletProducts = [
     price: "$10",
     minQuantity: "Minimum of 100",
     image: "url(/img/48x40-grade-a-stringer-wooden-pallet.webp)",
-    buyLink: "/buy-now",
+    buyLink: generateBuyLink(),
     specs: [
       { icon: "/img/component-3-5.svg", text: "Dimensions: 48x40" },
       { icon: "/img/component-3-3.svg", text: "Material: Wood" },
@@ -41,7 +52,7 @@ const palletProducts = [
     price: "$8",
     minQuantity: "Minimum of 100",
     image: "url(/img/48x40-grade-b-stringer-wooden-pallet.webp)",
-    buyLink: "/buy-now",
+    buyLink: generateBuyLink(),
     specs: [
       { icon: "/img/component-3-6.svg", text: "Dimension: 48x40" },
       { icon: "/img/component-3-11.svg", text: "Material: Wood" },
@@ -64,7 +75,7 @@ const palletProducts = [
     price: "$12",
     minQuantity: "Minimum of 50",
     image: "url(/img/aaa-pallets.webp)",
-    buyLink: "/buy-now",
+    buyLink: generateBuyLink(),
     specs: [
       { icon: "/img/component-3-5.svg", text: "Dimensions: 48x40" },
       { icon: "/img/component-3-3.svg", text: "Material: Wood" },

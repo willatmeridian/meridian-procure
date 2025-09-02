@@ -107,7 +107,7 @@ if (Astro.props.isFromSanity) {
               </a>
 
               <a 
-                href="/buy-now"
+                href={`/buy-now?location=${city}`}
                 class="bg-[#131f5b] hover:bg-[#0f1a4d] text-white text-xl font-['Instrument_Sans',Helvetica] font-normal px-6 py-[15px] h-auto rounded-xl transition-colors duration-200 inline-block"
               >
                 Buy Now
@@ -125,7 +125,7 @@ if (Astro.props.isFromSanity) {
       />
 
       <!-- Get Started Section -->
-      <GetStartedSection />
+      <GetStartedSection citySlug={city} />
 
       <!-- Quote Form Section -->
       <QuoteFormSection 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getCityPalletPricing } from '../../lib/sanity/client.js';
 import { loadStripe } from '@stripe/stripe-js';
 
@@ -32,12 +32,23 @@ const cities = [
 const stripePromise = loadStripe(import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 export default function CartSection() {
-  const [selectedLocation, setSelectedLocation] = useState('');
+  // Check URL params for pre-selected location
+  const urlParams = new URLSearchParams(window.location.search);
+  const preselectedLocation = urlParams.get('location');
+  
+  const [selectedLocation, setSelectedLocation] = useState(preselectedLocation || '');
   const [cart, setCart] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [palletData, setPalletData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+
+  // Auto-load pallet data if location is preselected
+  useEffect(() => {
+    if (preselectedLocation) {
+      handleLocationSelect(preselectedLocation);
+    }
+  }, [preselectedLocation]);
 
   const handleLocationSelect = async (locationSlug) => {
     setSelectedLocation(locationSlug);
