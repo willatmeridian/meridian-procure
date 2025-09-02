@@ -72,9 +72,29 @@ if (Astro.props.isFromSanity) {
   // Use props from static data
   ({ cityName, cityDescription, cityImage, heroTitle, heroSubtitle } = Astro.props);
 }
+
+// Generate hreflang tags for all city pages
+const baseUrl = 'https://meridian-procure.vercel.app';
+const allCities = [
+  'atlanta', 'birmingham', 'charlotte', 'chicago', 'columbus', 'dallas', 
+  'denver', 'detroit', 'houston', 'indianapolis', 'kansas-city', 
+  'los-angeles', 'louisville', 'miami', 'milwaukee', 'nashville', 
+  'norfolk', 'phoenix', 'salt-lake-city', 'seattle'
+];
+
+const hreflangLinks = [
+  { locale: 'en', url: `${baseUrl}/locations` },
+  ...allCities.map(citySlug => ({
+    locale: 'en',
+    url: `${baseUrl}/locations/${citySlug}`
+  }))
+];
 ---
 
-<Layout title={`${cityName} Pallets - Meridian | Local Pallet Solutions`}>
+<Layout 
+  title={`${cityName} Pallets - Meridian | Local Pallet Solutions`}
+  hreflang={hreflangLinks}
+>
   <div class="bg-white flex flex-row justify-center w-full">
     <div class="bg-white overflow-hidden w-full max-w-[1440px] relative">
       <!-- Navigation Bar Section -->

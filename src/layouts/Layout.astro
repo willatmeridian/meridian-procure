@@ -7,6 +7,7 @@ interface Props {
 	keywords?: string;
 	canonical?: string;
 	ogImage?: string;
+	hreflang?: Array<{locale: string, url: string}>;
 }
 
 const { 
@@ -14,7 +15,8 @@ const {
 	description = "Leading provider of high-quality industrial pallets across 20+ US locations. Custom pallets, recycled options, and heat-treated solutions. Fast delivery, competitive pricing, expert supply chain support.",
 	keywords = "industrial pallets, custom pallets, recycled pallets, heat treated pallets, pallet supplier, supply chain solutions, logistics, pallet delivery, wooden pallets",
 	canonical,
-	ogImage = "/img/meridian-og-image.jpg"
+	ogImage = "/img/meridian-og-image.jpg",
+	hreflang = []
 } = Astro.props;
 
 // Get current URL for canonical
@@ -34,6 +36,11 @@ const currentUrl = canonical || new URL(Astro.request.url).href;
 		<meta name="description" content={description} />
 		<meta name="keywords" content={keywords} />
 		<link rel="canonical" href={currentUrl} />
+		
+		<!-- Hreflang tags for geographic targeting -->
+		{hreflang.map(({locale, url}) => (
+			<link rel="alternate" hreflang={locale} href={url} />
+		))}
 		
 		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website" />

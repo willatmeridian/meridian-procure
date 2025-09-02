@@ -121,9 +121,24 @@ if (Astro.props.isFromSanity) {
   // Use static props
   ({ palletName, palletDescription, palletImage, palletPrice, palletSpecs, heroTitle, heroSubtitle } = Astro.props);
 }
+
+// Generate hreflang tags for all pallet type pages
+const baseUrl = 'https://meridian-procure.vercel.app';
+const allPalletTypes = ['aaa-gma', 'grade-a', 'grade-b', 'recycled', 'new-custom', 'heat-treated'];
+
+const hreflangLinks = [
+  { locale: 'en', url: `${baseUrl}/pallets` },
+  ...allPalletTypes.map(type => ({
+    locale: 'en',
+    url: `${baseUrl}/pallets/${type}`
+  }))
+];
 ---
 
-<Layout title={`${palletName} - Meridian | ${heroTitle}`}>
+<Layout 
+  title={`${palletName} - Meridian | ${heroTitle}`}
+  hreflang={hreflangLinks}
+>
   <div class="bg-white flex flex-row justify-center w-full">
     <div class="bg-white overflow-hidden w-full max-w-[1440px] relative">
       <!-- Navigation Bar Section -->
