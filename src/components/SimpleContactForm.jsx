@@ -63,7 +63,7 @@ const SimpleContactForm = () => {
       console.error('Form submission error:', error);
       setSubmitStatus({
         type: 'error',
-        message: 'Sorry, there was an error sending your message. Please try again or contact us directly at info@meridianprocure.com'
+        message: 'Sorry, there was an error sending your message. Please try again or contact us directly at info@meridianpkg.com'
       });
     } finally {
       setIsSubmitting(false);

@@ -112,7 +112,7 @@ export async function POST({ request, url }) {
           message: `Please provide the exact delivery address for your ${customerInfo?.location || 'selected location'} pallet order. We deliver within a 50-mile radius of our service locations. Our team will coordinate delivery details and confirm feasibility after purchase.`
         },
         submit: {
-          message: 'Questions? Call us at (214) 444-8963 or email info@meridianprocure.com. We\'ll process your order and contact you within 24 hours to confirm delivery details and scheduling.'
+          message: 'Questions? Call us at (214) 444-8963 or email info@meridianpkg.com. We\'ll process your order and contact you within 24 hours to confirm delivery details and scheduling.'
         },
         terms_of_service_acceptance: {
           message: 'By completing your purchase, you agree to our terms of service, delivery policies, and service area restrictions.'
