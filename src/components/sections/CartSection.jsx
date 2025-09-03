@@ -42,19 +42,6 @@ function CartSection() {
   const [loading, setLoading] = useState(false);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
-  // Check for URL parameters and auto-load location on component mount
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const urlParams = new URLSearchParams(window.location.search);
-      const locationParam = urlParams.get('location');
-      if (locationParam) {
-        setPreselectedLocation(locationParam);
-        setSelectedLocation(locationParam);
-        handleLocationSelect(locationParam);
-      }
-    }
-  }, []);
-
   const handleLocationSelect = useCallback(async (locationSlug) => {
     console.log('handleLocationSelect called with:', locationSlug);
     setSelectedLocation(locationSlug);
@@ -102,6 +89,62 @@ function CartSection() {
       }
     } else {
       setPalletData([]);
+    }
+  }, []);
+
+  // Check for URL parameters and auto-load location on component mount
+  useEffect(() => {
+    const loadLocationFromURL = async (locationSlug) => {
+      console.log('Loading location from URL:', locationSlug);
+      setSelectedLocation(locationSlug);
+      setCart([]);
+      setQuantities({});
+      
+      if (locationSlug) {
+        setLoading(true);
+        try {
+          console.log('Fetching data for location:', locationSlug);
+          const cmsData = await getCityPalletPricing(locationSlug);
+          console.log('Raw CMS data:', cmsData);
+          
+          const availableCMSPallets = cmsData
+            .filter(pallet => pallet.cityPricing && pallet.cityPricing.price)
+            .map(pallet => ({
+              id: pallet.slug,
+              name: pallet.name,
+              image: pallet.imageUrl || "/img/48x40-grade-a-stringer-wooden-pallet.webp",
+              description: pallet.shortDescription || pallet.description || "Premium pallet solution",
+              category: pallet.category,
+              locationPricing: {
+                [locationSlug]: {
+                  price: pallet.cityPricing.price,
+                  inStock: pallet.cityPricing.inStock || 500
+                }
+              }
+            }))
+            .sort((a, b) => {
+              const order = { 'aaa-grade': 0, 'grade-a': 1, 'grade-b': 2 };
+              return (order[a.category] || 3) - (order[b.category] || 3);
+            });
+          
+          console.log('Processed pallets for', locationSlug, ':', availableCMSPallets);
+          setPalletData(availableCMSPallets);
+        } catch (error) {
+          console.error('Error fetching pallet data:', error);
+          setPalletData([]);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const locationParam = urlParams.get('location');
+      if (locationParam) {
+        setPreselectedLocation(locationParam);
+        loadLocationFromURL(locationParam);
+      }
     }
   }, []);
 
@@ -328,7 +371,7 @@ function CartSection() {
         </div>
 
         {/* Step 2: Products and Cart (only show if location selected) */}
-        {selectedLocation && (
+        {selectedLocation ? (
           <div>
             <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 [font-family:'Instrument_Sans',Helvetica]">
@@ -577,7 +620,7 @@ function CartSection() {
               </div>
             </div>
           </div>
-        )}
+        ) : null}
       </div>
     </section>
   );
