@@ -171,7 +171,7 @@ function CartSection() {
   }, []);
 
   const getAvailablePallets = () => {
-    return palletData;
+    return Array.isArray(palletData) ? palletData : [];
   };
 
   const addToCart = useCallback((pallet, quantity) => {
@@ -428,9 +428,14 @@ function CartSection() {
                     <div className="text-center py-8 text-gray-500 [font-family:'Instrument_Sans',Helvetica]">
                       Loading available products...
                     </div>
-                  ) : availableProducts.length > 0 ? availableProducts.map(pallet => {
-                    const locationData = pallet.locationPricing[selectedLocation];
+                  ) : (availableProducts && Array.isArray(availableProducts) && availableProducts.length > 0) ? availableProducts.map(pallet => {
+                    const locationData = pallet.locationPricing?.[selectedLocation];
                     const currentQty = quantities[pallet.id] !== undefined ? quantities[pallet.id] : 100;
+                    
+                    if (!locationData) {
+                      console.warn('No location data for pallet:', pallet.id, 'location:', selectedLocation);
+                      return null;
+                    }
                     
                     return (
                       <div key={pallet.id} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
@@ -506,7 +511,7 @@ function CartSection() {
                         </div>
                       </div>
                     );
-                  }) : (
+                  }).filter(Boolean) : (
                     <div className="text-center py-8 text-gray-500 [font-family:'Instrument_Sans',Helvetica]">
                       No products available for this location.
                     </div>
