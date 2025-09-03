@@ -8,6 +8,7 @@ interface Props {
 	canonical?: string;
 	ogImage?: string;
 	hreflang?: Array<{locale: string, url: string}>;
+	preloadHeroImage?: boolean;
 }
 
 const { 
@@ -16,7 +17,8 @@ const {
 	keywords = "industrial pallets, custom pallets, recycled pallets, heat treated pallets, pallet supplier, supply chain solutions, logistics, pallet delivery, wooden pallets",
 	canonical,
 	ogImage = "/img/meridian-og-image.jpg",
-	hreflang = []
+	hreflang = [],
+	preloadHeroImage = true
 } = Astro.props;
 
 // Get current URL for canonical
@@ -69,9 +71,13 @@ const currentUrl = canonical || new URL(Astro.request.url).href;
 		<meta name="business:contact_data:phone_number" content="+12144448963" />
 		<meta name="business:contact_data:website" content="https://meridian-procure.vercel.app" />
 		
-		<!-- Preload critical hero images for better LCP -->
-		<link rel="preload" as="image" href="/img/hero/homepage-mobile.webp" media="(max-width: 768px)" />
-		<link rel="preload" as="image" href="/img/hero/homepage-desktop.webp" media="(min-width: 769px)" />
+		<!-- Preload critical hero images for better LCP (only when needed) -->
+		{preloadHeroImage && (
+			<>
+				<link rel="preload" as="image" href="/img/hero/homepage-mobile.webp" media="(max-width: 768px)" />
+				<link rel="preload" as="image" href="/img/hero/homepage-desktop.webp" media="(min-width: 769px)" />
+			</>
+		)}
 		
 		<!-- DNS prefetch for external resources -->
 		<link rel="dns-prefetch" href="//fonts.googleapis.com" />
