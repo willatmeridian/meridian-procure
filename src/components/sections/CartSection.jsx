@@ -52,8 +52,19 @@ function CartSection() {
       setLoading(true);
       try {
         console.log('Fetching data for location:', locationSlug);
+        if (typeof getCityPalletPricing !== 'function') {
+          console.error('getCityPalletPricing is not a function!', typeof getCityPalletPricing);
+          setPalletData([]);
+          return;
+        }
         const cmsData = await getCityPalletPricing(locationSlug);
         console.log('Raw CMS data:', cmsData);
+        
+        if (!cmsData || !Array.isArray(cmsData)) {
+          console.warn('No valid CMS data returned for location:', locationSlug);
+          setPalletData([]);
+          return;
+        }
         
         // Filter out pallets without pricing for this location and sort by category
         const availableCMSPallets = cmsData
@@ -104,8 +115,19 @@ function CartSection() {
         setLoading(true);
         try {
           console.log('Fetching data for location:', locationSlug);
+          if (typeof getCityPalletPricing !== 'function') {
+            console.error('getCityPalletPricing is not a function!', typeof getCityPalletPricing);
+            setPalletData([]);
+            return;
+          }
           const cmsData = await getCityPalletPricing(locationSlug);
           console.log('Raw CMS data:', cmsData);
+          
+          if (!cmsData || !Array.isArray(cmsData)) {
+            console.warn('No valid CMS data returned for location:', locationSlug);
+            setPalletData([]);
+            return;
+          }
           
           const availableCMSPallets = cmsData
             .filter(pallet => pallet.cityPricing && pallet.cityPricing.price)
