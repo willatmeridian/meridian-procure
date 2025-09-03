@@ -572,20 +572,20 @@ function CartSection() {
                     <div className="space-y-3 mb-6">
                       <div className="flex justify-between text-gray-600 [font-family:'Instrument_Sans',Helvetica]">
                         <span>Subtotal:</span>
-                        <span>${calculateSubtotal().toFixed(2)}</span>
+                        <span>${calculateSubtotal.toFixed(2)}</span>
                       </div>
                       <div className="flex justify-between text-gray-600 [font-family:'Instrument_Sans',Helvetica]">
                         <span>Delivery Fee:</span>
-                        <span>${calculateShipping().toFixed(2)}</span>
+                        <span>${calculateShipping.toFixed(2)}</span>
                       </div>
-                      {calculateShipping() === 0 && (
+                      {calculateShipping === 0 && (
                         <div className="text-xs text-green-600 [font-family:'Instrument_Sans',Helvetica]">
                           ✓ Free delivery (550+ pallets)
                         </div>
                       )}
                       <div className="border-t pt-3 flex justify-between text-lg font-bold text-gray-900 [font-family:'Instrument_Sans',Helvetica]">
                         <span>Total:</span>
-                        <span>${calculateTotal().toFixed(2)}</span>
+                        <span>${calculateTotal.toFixed(2)}</span>
                       </div>
                     </div>
                     
