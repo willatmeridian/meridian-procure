@@ -24,8 +24,10 @@ const HubSpotContactForm = ({ formId = null }) => {
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
       const gclid = urlParams.get('gclid');
+      console.log('HubSpot Contact Form - GCLID captured:', gclid);
       if (gclid) {
         setFormData(prev => ({ ...prev, gclid }));
+        console.log('HubSpot Contact Form - GCLID set in form state');
       }
     }
   }, []);
@@ -48,7 +50,9 @@ const HubSpotContactForm = ({ formId = null }) => {
       const mainFormId = formId || import.meta.env.PUBLIC_HUBSPOT_FORM_ID;
       
       // Transform form data for HubSpot
+      console.log('HubSpot Contact Form - Form data before transform:', formData);
       const transformedData = transformFormData(formData);
+      console.log('HubSpot Contact Form - Transformed data:', transformedData);
       
       // Submit to HubSpot
       const result = await submitToHubSpot(transformedData, mainFormId);
@@ -96,6 +100,15 @@ const HubSpotContactForm = ({ formId = null }) => {
             : 'bg-red-50 border border-red-200 text-red-800'
         }`}>
           {submitStatus.message}
+        </div>
+      )}
+      
+      {/* Debug: Show GCLID when present */}
+      {formData.gclid && (
+        <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+          <p className="text-sm text-blue-800">
+            <strong>Google Ads Click ID captured:</strong> {formData.gclid}
+          </p>
         </div>
       )}
       

@@ -27,6 +27,7 @@ export async function submitToHubSpot(formData, formId) {
       // Only trim if it's originally a string, otherwise just convert to string
       const finalValue = typeof value === 'string' ? stringValue.trim() : stringValue;
       if (finalValue !== '') {
+        console.log(`HubSpot mapping: ${key} -> ${hubspotField} = ${finalValue}`);
         formEncodedData.append(hubspotField, finalValue);
       }
     }
@@ -105,7 +106,7 @@ export const HUBSPOT_FIELD_MAPPING = {
   additionalDetails: 'rfq_details',
   
   // Google Ads tracking
-  gclid: 'hs_google_click_id'
+  gclid: 'gclid_form'
 };
 
 // Transform form data using field mapping
