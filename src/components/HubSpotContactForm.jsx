@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
@@ -12,11 +12,23 @@ const HubSpotContactForm = ({ formId = null }) => {
     email: '',
     phone: '',
     company: '',
-    message: ''
+    message: '',
+    gclid: ''
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+
+  // Capture GCLID from URL on component mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const gclid = urlParams.get('gclid');
+      if (gclid) {
+        setFormData(prev => ({ ...prev, gclid }));
+      }
+    }
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -47,15 +59,16 @@ const HubSpotContactForm = ({ formId = null }) => {
           message: 'Thank you! Your message has been sent successfully. We\'ll get back to you soon.'
         });
         
-        // Reset form
-        setFormData({
+        // Reset form but keep gclid
+        setFormData(prev => ({
           firstName: '',
           lastName: '',
           email: '',
           phone: '',
           company: '',
-          message: ''
-        });
+          message: '',
+          gclid: prev.gclid
+        }));
       } else {
         throw new Error(result.error);
       }

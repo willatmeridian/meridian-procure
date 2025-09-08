@@ -223,7 +223,7 @@ const QuoteFormComponent = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div>
           <label className="block text-gray-700 font-medium mb-2 [font-family:'Instrument_Sans',Helvetica]">
-            Pallet Dimensions<span className="text-red-500 ml-1">*</span>
+            Pallet Dimensions
           </label>
           <input
             type="text"
@@ -231,7 +231,6 @@ const QuoteFormComponent = () => {
             value={formData.palletDimensions}
             onChange={handleInputChange}
             placeholder='##" x ##"'
-            required
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 [font-family:'Instrument_Sans',Helvetica]"
           />
         </div>

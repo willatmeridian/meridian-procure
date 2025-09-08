@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
@@ -12,12 +12,24 @@ const HubSpotQuoteForm = ({ formId = null }) => {
     email: '',
     phone: '',
     company: '',
-    message: ''
+    message: '',
+    gclid: ''
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
   const formRef = useRef(null);
+
+  // Capture GCLID from URL on component mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const gclid = urlParams.get('gclid');
+      if (gclid) {
+        setFormData(prev => ({ ...prev, gclid }));
+      }
+    }
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -48,15 +60,16 @@ const HubSpotQuoteForm = ({ formId = null }) => {
           message: 'Thank you! Your message has been submitted. We\'ll contact you within 24 hours.'
         });
         
-        // Reset form
-        setFormData({
+        // Reset form but keep gclid
+        setFormData(prev => ({
           firstName: '',
           lastName: '',
           email: '',
           phone: '',
           company: '',
-          message: ''
-        });
+          message: '',
+          gclid: prev.gclid
+        }));
         
         // Scroll to top of form to show success message
         if (formRef.current) {

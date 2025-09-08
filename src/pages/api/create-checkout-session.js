@@ -12,7 +12,7 @@ export async function POST({ request, url }) {
     }
     
     const stripe = new Stripe(stripeSecretKey);
-    const { items, customerInfo } = await request.json();
+    const { items, customerInfo, gclid } = await request.json();
 
     console.log('Creating checkout session with Stripe key type:', stripeSecretKey.startsWith('sk_live_') ? 'LIVE' : 'TEST');
     console.log('Items received:', items.length);
@@ -104,7 +104,9 @@ export async function POST({ request, url }) {
       metadata: {
         customerLocation: customerInfo?.location || '',
         totalPallets: totalPallets.toString(),
-        orderType: 'online_purchase'
+        orderType: 'online_purchase',
+        gclid: gclid || '',
+        source: 'website_checkout'
       },
       // Customize the checkout page with branding and messaging
       custom_text: {

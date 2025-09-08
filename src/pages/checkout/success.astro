@@ -4,7 +4,10 @@ import NavigationBarSection from '../../components/NavigationBarSection.jsx';
 import FooterSection from '../../components/sections/FooterSection.astro';
 ---
 
-<Layout title="Order Confirmed - Meridian | Thank You for Your Purchase">
+<Layout 
+  title="Order Confirmed - Meridian | Thank You for Your Purchase"
+  description="Thank you for your pallet order. Your payment has been processed and we'll contact you within 24 hours."
+>
   <div class="bg-white flex flex-row justify-center w-full">
     <div class="bg-white overflow-hidden w-full max-w-[1440px] relative">
       <!-- Navigation Bar Section -->
@@ -13,6 +16,31 @@ import FooterSection from '../../components/sections/FooterSection.astro';
       <!-- Success Section -->
       <section class="w-full py-24 mt-[88px]">
         <div class="max-w-4xl mx-auto px-4 text-center">
+          <!-- Order Summary (populated by JavaScript) -->
+          <div id="order-summary" class="hidden bg-white border border-gray-200 rounded-2xl p-6 mb-8 text-left">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4 [font-family:'Instrument_Sans',Helvetica]">
+              Order Summary
+            </h2>
+            <div class="space-y-2 text-gray-700">
+              <div class="flex justify-between">
+                <span>Order Total:</span>
+                <span id="order-amount" class="font-semibold">--</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Delivery Location:</span>
+                <span id="delivery-location">--</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Total Pallets:</span>
+                <span id="total-pallets">--</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Order ID:</span>
+                <span id="order-id" class="font-mono text-sm">--</span>
+              </div>
+            </div>
+          </div>
+
           <!-- Success Icon -->
           <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-8">
             <svg class="w-10 h-10 text-green-600" fill="currentColor" viewBox="0 0 20 20">
@@ -117,16 +145,111 @@ import FooterSection from '../../components/sections/FooterSection.astro';
   const sessionId = urlParams.get('session_id');
   
   if (sessionId) {
-    // You can store this for order tracking or send to analytics
-    console.log('Stripe session ID:', sessionId);
+    console.log('Processing order for session:', sessionId);
     
-    // Optional: Send conversion tracking to analytics
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'purchase', {
-        transaction_id: sessionId,
-        value: 0, // You'd need to get this from session
-        currency: 'USD'
+    // Fetch session data from our API
+    fetch(`/api/get-session-data?session_id=${sessionId}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log('Session data received:', data);
+        
+        if (data.success && !data.error) {
+          // Update order summary display
+          updateOrderSummary(data);
+          
+          // Fire Google Ads conversion tracking
+          fireGoogleAdsConversion(data);
+          
+          // Fire Google Analytics purchase event
+          fireGoogleAnalyticsPurchase(data);
+          
+        } else {
+          console.error('Error fetching session data:', data.error);
+        }
+      })
+      .catch(error => {
+        console.error('Failed to fetch session data:', error);
       });
+  }
+  
+  // Update the order summary display
+  function updateOrderSummary(data) {
+    const summaryEl = document.getElementById('order-summary');
+    if (summaryEl && data.success) {
+      // Show the order summary
+      summaryEl.classList.remove('hidden');
+      
+      // Update values
+      document.getElementById('order-amount').textContent = `$${data.amount.toFixed(2)} ${data.currency}`;
+      document.getElementById('delivery-location').textContent = data.customerLocation || 'Not specified';
+      document.getElementById('total-pallets').textContent = data.totalPallets || 'Not specified';
+      document.getElementById('order-id').textContent = data.id;
+    }
+  }
+  
+  // Fire Google Ads conversion tracking
+  function fireGoogleAdsConversion(data) {
+    if (data.success && data.gclid) {
+      console.log('Firing Google Ads conversion with GCLID:', data.gclid);
+      
+      // Google Ads Global Site Tag conversion tracking
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'conversion', {
+          'send_to': 'AW-17368628713/z4sSCPKe5vIaEOn7gNpA',
+          'value': data.amount,
+          'currency': data.currency,
+          'transaction_id': data.id,
+          'gclid': data.gclid
+        });
+        
+        console.log('Google Ads conversion fired');
+      } else {
+        console.warn('Google Ads gtag not found - make sure Global Site Tag is loaded');
+      }
+    } else if (data.success && !data.gclid) {
+      console.log('No GCLID found - user did not arrive from Google Ads');
+    }
+  }
+  
+  // Fire Google Analytics purchase event
+  function fireGoogleAnalyticsPurchase(data) {
+    if (data.success) {
+      // Google Analytics 4 purchase event
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'purchase', {
+          'transaction_id': data.id,
+          'value': data.amount,
+          'currency': data.currency,
+          'items': [{
+            'item_id': 'pallet_order',
+            'item_name': 'Pallet Order',
+            'category': 'Pallets',
+            'quantity': parseInt(data.totalPallets) || 1,
+            'price': data.amount
+          }]
+        });
+        
+        console.log('Google Analytics purchase event fired');
+      }
     }
   }
 </script>
+
+<!-- Google Ads Conversion Tracking Setup Instructions -->
+<!-- 
+  To complete Google Ads conversion tracking:
+  
+  1. Replace 'AW-CONVERSION_ID/CONVERSION_LABEL' above with your actual values from Google Ads
+  2. Add your Google Ads Global Site Tag to your Layout.astro head section:
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-CONVERSION_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-CONVERSION_ID');
+  </script>
+  
+  3. The conversion will automatically fire when users complete a purchase from Google Ads
+-->

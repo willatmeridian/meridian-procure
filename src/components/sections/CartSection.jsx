@@ -41,6 +41,7 @@ function CartSection() {
   const [palletData, setPalletData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [gclid, setGclid] = useState('');
 
   const handleLocationSelect = useCallback(async (locationSlug) => {
     console.log('handleLocationSelect called with:', locationSlug);
@@ -105,6 +106,14 @@ function CartSection() {
 
   // Check for URL parameters and auto-load location on component mount
   useEffect(() => {
+    // Capture GCLID from URL parameters
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const gclidParam = urlParams.get('gclid');
+      if (gclidParam) {
+        setGclid(gclidParam);
+      }
+    }
     const loadLocationFromURL = async (locationSlug) => {
       console.log('Loading location from URL:', locationSlug);
       setSelectedLocation(locationSlug);
@@ -284,6 +293,7 @@ function CartSection() {
 
       const customerInfo = {
         location: selectedCity ? `${selectedCity.name}, ${selectedCity.state}` : selectedLocation,
+        gclid: gclid || null,
         // Don't send empty email - let Stripe collect it
       };
 
@@ -297,7 +307,8 @@ function CartSection() {
         },
         body: JSON.stringify({
           items: checkoutItems,
-          customerInfo
+          customerInfo,
+          gclid: gclid || null
         }),
       });
 

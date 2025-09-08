@@ -102,7 +102,10 @@ export const HUBSPOT_FIELD_MAPPING = {
   lumberType: 'lumber_type',
   palletGrade: 'pallet_grade',
   heatTreated: 'heat_treatment',
-  additionalDetails: 'rfq_details'
+  additionalDetails: 'rfq_details',
+  
+  // Google Ads tracking
+  gclid: 'hs_google_click_id'
 };
 
 // Transform form data using field mapping
