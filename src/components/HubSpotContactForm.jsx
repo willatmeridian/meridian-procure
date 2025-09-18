@@ -103,15 +103,6 @@ const HubSpotContactForm = ({ formId = null }) => {
         </div>
       )}
       
-      {/* Debug: Show GCLID when present */}
-      {formData.gclid && (
-        <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-          <p className="text-sm text-blue-800">
-            <strong>Google Ads Click ID captured:</strong> {formData.gclid}
-          </p>
-        </div>
-      )}
-      
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">

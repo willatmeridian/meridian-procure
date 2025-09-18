@@ -33,13 +33,33 @@ export async function submitToHubSpot(formData, formId) {
     }
   });
   
-  // Add HubSpot tracking data
-  const hutk = getCookieValue('hubspotutk');
-  if (hutk) {
-    formEncodedData.append('hutk', hutk);
-  }
-  
+  // Add HubSpot context data as JSON
   if (typeof window !== 'undefined') {
+    const hutk = getCookieValue('hubspotutk');
+    
+    // Get user IP address from our server endpoint
+    let userIP = null;
+    try {
+      const ipResponse = await fetch('/api/get-client-ip');
+      const ipData = await ipResponse.json();
+      userIP = ipData.ip;
+    } catch (error) {
+      console.warn('Could not fetch IP address:', error);
+    }
+    
+    // Create the hs_context object as required by HubSpot
+    const hsContext = {
+      hutk: hutk || null,
+      pageUrl: window.location.href,
+      ipAddress: userIP
+    };
+    
+    console.log('HubSpot hs_context:', hsContext);
+    
+    // Add as hs_context JSON string (this is the key field HubSpot expects)
+    formEncodedData.append('hs_context', JSON.stringify(hsContext));
+    
+    // Keep legacy fields for compatibility
     formEncodedData.append('pageUri', window.location.href);
     formEncodedData.append('pageName', document.title || '');
   }

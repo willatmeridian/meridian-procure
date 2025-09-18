@@ -117,15 +117,6 @@ const HubSpotQuoteForm = ({ formId = null }) => {
           </div>
         )}
         
-        {/* Debug: Show GCLID when present */}
-        {formData.gclid && (
-          <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-            <p className="text-sm text-blue-800">
-              <strong>Google Ads Click ID captured:</strong> {formData.gclid}
-            </p>
-          </div>
-        )}
-        
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <div className="flex flex-col md:flex-row gap-[30px]">
             <div className="flex-1 flex flex-col gap-2.5">
