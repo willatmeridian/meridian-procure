@@ -212,21 +212,39 @@ const currentUrl = canonical || new URL(Astro.request.url).href;
 			gtag('js', new Date());
 			gtag('config', 'AW-17368628713');
 			
-			// Click-to-call conversion tracking
+			// Click-to-call conversion tracking with error handling
 			function gtag_report_conversion(url) {
-				var callback = function () {
-					if (typeof(url) != 'undefined') {
-						window.location = url;
+				try {
+					// Check if gtag is available
+					if (typeof gtag === 'undefined') {
+						console.warn('Google Ads gtag not loaded yet, proceeding with call');
+						if (url) window.location = url;
+						return false;
 					}
-				};
-				gtag('event', 'conversion', {
-					'send_to': 'AW-17368628713/PR3HCJjj9ZYbEOn7gNpA',
-					'value': 1.0,
-					'currency': 'USD',
-					'event_callback': callback
-				});
-				return false;
+					
+					var callback = function () {
+						if (typeof(url) != 'undefined') {
+							window.location = url;
+						}
+					};
+					
+					gtag('event', 'conversion', {
+						'send_to': 'AW-17368628713/PR3HCJjj9ZYbEOn7gNpA',
+						'value': 1.0,
+						'currency': 'USD',
+						'event_callback': callback
+					});
+					return false;
+				} catch (error) {
+					console.warn('Conversion tracking failed:', error);
+					// Still allow the call to proceed
+					if (url) window.location = url;
+					return false;
+				}
 			}
+			
+			// Make function globally available
+			window.gtag_report_conversion = gtag_report_conversion;
 		</script>
 	</head>
 	<body>
