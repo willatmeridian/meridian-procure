@@ -188,25 +188,35 @@ import FooterSection from '../../components/sections/FooterSection.astro';
     }
   }
   
-  // Fire Google Ads conversion tracking
+  // Fire Google Ads conversion tracking with retry logic
   function fireGoogleAdsConversion(data) {
     if (data.success && data.gclid) {
       console.log('Firing Google Ads conversion with GCLID:', data.gclid);
-      
-      // Google Ads Global Site Tag conversion tracking
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'conversion', {
-          'send_to': 'AW-17368628713/z4sSCPKe5vIaEOn7gNpA',
-          'value': data.amount,
-          'currency': data.currency,
-          'transaction_id': data.id,
-          'gclid': data.gclid
-        });
-        
-        console.log('Google Ads conversion fired');
-      } else {
-        console.warn('Google Ads gtag not found - make sure Global Site Tag is loaded');
+
+      // Retry logic for gtag availability
+      function attemptConversion(attempts = 0) {
+        const maxAttempts = 5;
+        const retryDelay = 1000; // 1 second
+
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'conversion', {
+            'send_to': 'AW-17368628713/z4sSCPKe5vIaEOn7gNpA',
+            'value': data.amount,
+            'currency': data.currency,
+            'transaction_id': data.id,
+            'gclid': data.gclid
+          });
+
+          console.log('Google Ads conversion fired');
+        } else if (attempts < maxAttempts) {
+          console.log(`Google Ads gtag not loaded yet, retrying in ${retryDelay}ms (attempt ${attempts + 1}/${maxAttempts})`);
+          setTimeout(() => attemptConversion(attempts + 1), retryDelay);
+        } else {
+          console.warn('Google Ads gtag not found after maximum retry attempts');
+        }
       }
+
+      attemptConversion();
     } else if (data.success && !data.gclid) {
       console.log('No GCLID found - user did not arrive from Google Ads');
     }
